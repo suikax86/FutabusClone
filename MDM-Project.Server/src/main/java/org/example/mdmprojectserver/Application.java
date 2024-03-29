@@ -11,6 +11,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+//TODO: UserEntity&Customer mapping
+//TODO: Buses: embedded seats, ticket
+//TODO: Buses: implement api find bus by departureLocation, arrivalLocation, departureTime
+//TODO: Sort by fire, sort by departureTime
+//TODO: Handle output of exception in controller
+//TODO: Handle validate of phoneNumber
+//TODO: Handle authentication api
+
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "MDM Project API", version = "1.0", description = "MDM Project API"))
 public class Application implements CommandLineRunner {
@@ -18,9 +26,8 @@ public class Application implements CommandLineRunner {
     private RoleRepository roleRepository;
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-    //TODO: Handle output of exception in controller
-    //TODO: Handle validate of phoneNumber
-    //TODO: Handle authentication api
+
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
