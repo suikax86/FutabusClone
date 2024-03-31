@@ -8,6 +8,9 @@ import ManageBooking from './containers/ManageBooking/ManageBooking';
 import Invoice from './containers/Invoice/Invoice';
 import Login from './containers/Auth/Login/Login';
 import Register from './containers/Auth/Register/Register';
+import Information from './containers/User/Information/Information';
+import TicketHistory from './containers/User/TicketHistory/TicketHistory';
+import ResetPassword from './containers/User/ResetPassword/ResetPassword';
 
 function App() {
 
@@ -19,6 +22,9 @@ function App() {
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/information" element={<Information />} />
+      <Route path="/ticket-purchase-history" element={<TicketHistory />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

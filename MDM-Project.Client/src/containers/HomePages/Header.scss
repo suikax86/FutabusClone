@@ -5,6 +5,8 @@
     min-height: 180px;
     font-size: 13px;
     height: 220px;
+    padding-left: 30px;
+    padding-right: 30px;
     margin-left: auto;
     margin-right: auto;
     position: relative;
@@ -79,6 +81,76 @@
                         font-weight: 900;
                     }
                 }
+
+                .logged-section {
+                    position: relative;
+                    height: 2rem;
+                    align-items: center;
+                    gap: 1rem;
+                    cursor: pointer;
+
+                    .img-person {
+                        width: 32px;
+                        height: 100%;
+                    }
+
+                    .account-name {
+                        color: rgb(255 255 255);
+                        font-weight: 500;
+                    }
+
+                    .menu-account {
+                        display: none;
+                        position: absolute;
+                        width: 100%;
+                        min-width: 200px;
+                        left: -10px;
+                        top: 40px;
+                        border: 1px solid white;
+                        border-radius: 5px;
+                        z-index: 100;
+
+                        .menu-account-content {
+                            position: relative;
+                            margin: 0;
+                            padding: 4px 0;
+                            text-align: left;
+                            list-style-type: none;
+                            background-color: #fff;
+                            background-clip: padding-box;
+                            border-radius: 2px;
+                            outline: none;
+                            box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08), 0 9px 28px 8px rgba(0,0,0,.05);
+
+                            li {
+                                position: relative;
+                                display: flex;
+                                align-items: center;
+                                list-style-type: none;
+                                background-color: #f5f5f5;
+                                clear: both;
+                                margin: 0;
+                                padding: 5px 12px;
+                                color: rgba(0,0,0,.85);
+                                font-weight: 400;
+                                font-size: 15px;
+                                line-height: 22px;
+                                cursor: pointer;
+
+                                .menu-account-child-content {
+                                    display: flex;
+                                    align-items: center;
+                                    padding: 0.5rem;
+                                    color: rgba(0,0,0,.85);
+                                }
+
+                                &:hover {
+                                    background-color: rgb(234, 232, 232);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -87,10 +159,14 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+        padding-left: 100px;
+        padding-right: 100px;
 
         .child-content {
             width: 8rem;
             padding-bottom: 0.75rem;
+            padding-left: 10px;
+            padding-right: 10px;
             margin: 0 0.5rem;
             font-weight: 600;
             font-size: 1rem;
