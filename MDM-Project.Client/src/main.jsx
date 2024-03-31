@@ -4,9 +4,7 @@ import App from './App.jsx'
 import { BrowserRouter } from "react-router-dom";
 import './index.scss'
 
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 import { AuthProvider } from './services/auth.jsx';
