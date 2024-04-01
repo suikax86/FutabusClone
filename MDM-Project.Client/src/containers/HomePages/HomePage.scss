@@ -1,3 +1,27 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(137, 137, 137, 0.795); 
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(137, 137, 137); 
+}
+
+input[type=number]::-webkit-inner-spin-button, //xóa nút tăng giảm trong input number
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
 main {
     width: 100%;
 
@@ -46,73 +70,175 @@ main {
                 }
             }
 
-            .search-form {
-                max-width: 1128px;
-                background: #fff;
-                font-weight: 500;
-                border: 1px solid rgba(239,82,34,.6);
-                border-radius: 1rem;
-                padding: 1.5rem;
+
+            .Home {
+                padding: 20px;
+                margin: 0;
+                width: 1128px;
+                border: solid 1px #525151;
+                border-radius: 12.5px;
                 margin: auto;
-                outline: 8px solid rgba(170,46,8,.1);
-
-                .select-1-frame {
-                    display: flex;
-                    align-items: center;
-                    font-size: 16px;
-
-                    .select-1-child-content {
+                margin-top: 50px;
+                outline: 8px solid rgba(201, 59, 16, 0.1);
+                .form-control:focus{
+                    box-shadow: none;
+                }
+            
+                .LoaiVe{
+                    width: 100%;
+                    .form-check-input{
+                        display: inline-block;
                         margin-left: 0;
-                        margin-right: 20px;
-                        font-weight: 500;
+                        margin: 4px 5px 0 10px;
+                    }
+                    .form-check-input + .form-check-label{
+                        transition: .1s ease;
+                        cursor: pointer;
+                    }
+                
+                    .form-check-input:checked{
+                        background-color: #ff7300;
+                
+                    } 
+                
+                    .form-check-input:checked + .form-check-label{
+                        color: #ff7300;
+                        font-weight: bold;
                     }
                 }
-
-                .select-2-frame {
-                    padding: 1rem 0;
-                    margin: 0;
-                    max-width: 100%;
-
-                    .switch-location {
-                        display: flex;
-                        position: relative;
-                        top: 15px;
-                        z-index: 10;
+            
+                .Huongdan{
+                    p{
                         cursor: pointer;
-                        object-fit: contain;
-                        width: auto;
-                        height: auto;
+                        display: inline-block;
+                        margin-bottom: 0;
+                        transition: 0.1s ease;
                     }
+                    p:hover{
+                        color: #ff7300;
+                    }
+                }
+            
+                .DiaDiem{
+                    margin: 15px;
+                    p{
+                        margin: 0;
+                        margin-left: 15px;
+                        font-size: 15px;
+                    }
+            
+                    .DiaDiem-btn{
+                        background-color: #fff;
+                        border: solid 1px #808080;
+                        border-radius: 12.5px;
+                        color: #000;
+                        font-weight: bold;
+                        height: 50px;
+                        width: 100%;
+                        padding: 10px;
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                    .dropdown{}
 
-                    .date-width {
-                        width: 200px;
-
-                        .custom-datepick {
-                            height: 70px;
+                    .dropdown-menu{
+                        width: calc(100% - 25px);
+                        height: 270px;
+                        overflow: auto;
+                    }
+            
+                    .dropdown-item{
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                    }
+            
+                    .dropdown-item:active{
+                        background-color: #ff7300 !important;
+                        font-weight: bold;
+                    }
+            
+                    img{
+                        width: 30px;
+                        height: 30px;
+                        display: flex;
+                        padding: 0;
+                        margin-top: 32px;
+                        transition: 0.1s ease;
+                        cursor: pointer;
+                        :hover{
+                            // filter: brightness(20%);
+                            transform: scale(0.97);
+                
                         }
                     }
-
-                    .select-custom {
-                        width: 80px;
-                        height: 70px;
+            
+                    .SoVe-btn{
+                        background-color: #fff;
+                        border: solid 1px #808080;
+                        border-radius: 12.5px;
+                        color: #000;
+                        height: 50px;
+                        width: 100%;
+                        padding: 10px;
+                        display: flex;
+                        align-items: center;
+            
+                        p{
+                            display: inline-block;
+                            vertical-align: top;
+                            margin: auto;
+                            bottom: 15px;
+                        }
+            
+                        img{
+                            width: 15px;
+                            height: auto;
+                            display: flex;
+                            align-items: right;
+                            margin: 0;
+            
+                        }
                     }
-
+            
+                    .NgayDi{
+                        background-color: #fff;
+                        border: solid 1px #808080;
+                        border-radius: 12.5px;
+                        color: #000;
+                        height: 50px;
+                        width: 100%;
+                        padding: 15px;
+                    }
+                    
                 }
-
-                .btn-search-homepage {
-                    position: absolute;
-                    z-index: 10;
-                    color: rgb(255 255 255);
-                    font-size: 1rem;
-                    line-height: 1.5rem;
-                    padding-left: 5rem;
-                    padding-right: 5rem;
-                    background-color: rgb(239 82 34);
-                    border-radius: 9999px;
-                    height: 3rem;
-                    border: 1px solid rgb(239 82 34);
+            
+                .TimChuyen-btn{
+                    margin: auto;
+                    width: 150px;
+                    border-radius: 12.5px;
+                    padding: 10px;
+                    margin-top:50px;
+                    background-color: #ff7300;
+                    box-shadow: 2px 2px 5px #808080;
+                    transition: 0.3s ease;
+                    color: #fff;
+                    user-select: none;
+                    cursor: pointer;
                 }
+                .TimChuyen-btn:hover{
+                    background-color: #f8801e;
+                    border-color: transparent;
+                    transition: 0.3s ease;
+                }
+            
+                .TimChuyen-btn:active{
+                    background-color: #df6400;
+                }
+                
             }
+            
         }
     }
 }

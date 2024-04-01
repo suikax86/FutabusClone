@@ -8,6 +8,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './HomePage.scss';
 
+import swap from '/img/two-opposite-arrows.svg' ;
+import dropdown from '/img/caret-down.svg';
+
 import Header from "./Header";
 
 const HomePage = () => {
@@ -27,7 +30,44 @@ const HomePage = () => {
           kindOfStand: e.target.value
         }));
       };
+    
 
+      const navigate = useNavigate();
+
+      const huongdan = () => {
+          navigate('/huongdan');
+      }
+  
+      const timchuyen = () => {
+          navigate('/tra-cuu-ve')
+      }
+  
+      const [DiemDi, setDiemDi] = useState('');
+      const [DiemDen, setDiemDen] = useState('');
+      const [SoVe, setSoVe] = useState(1);
+      
+      const swapDiaDiem = () => {
+        const temp = DiemDi;
+        setDiemDi(DiemDen);
+        setDiemDen(temp);
+      }
+
+      // const handleDiemDiChange = (event) => {
+      //     const newValue = event.target.value;
+      //     console.log(DiemDi);
+      //     setDiemDi(newValue);
+      // };
+  
+      // const handleDiemDenChange = (event) => {
+      //     const newValue = event.target.value;
+      //     setDiemDen(newValue);
+      // };
+
+    //TODO: tạo hàm gọi API trả về 
+    const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
+    const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
+  
+      const [LoaiVe, setLoaiVe] = useState('MotChieu');
     return (
         <React.Fragment>
             <Header />
@@ -37,88 +77,149 @@ const HomePage = () => {
                         <div className='homepage-banner'>
                             <img src='https://storage.googleapis.com/futa-busline-web-cms-prod/Artboard_2_8_c5af86ae89/Artboard_2_8_c5af86ae89.png'/>
                         </div>
-                        <div className='search-form'>
-                            <form>
-                                <Form.Group className='select-1-frame'>
-                                    <Form.Check
-                                        className='select-1-child-content'
-                                        value="một chiều"
-                                        type="radio"
-                                        aria-label="radio 1"
-                                        label="Một chiều"
-                                        onChange={handleChange}
-                                        checked={kindOfStand === "một chiều"}
-                                    />
-                                    <Form.Check
-                                        className='select-1-child-content'
-                                        value="khứ hồi"
-                                        type="radio"
-                                        aria-label="radio 2"
-                                        label="Khứ hồi"
-                                        onChange={handleChange}
-                                        checked={kindOfStand === "khứ hồi"}
-                                    />
-                                </Form.Group>
-                                <Container className='select-2-frame'>
-                                    <Row>
-                                        <Col className='d-flex me-2'>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label className='fw-bold'>Điểm đi</Form.Label>
-                                                <Form.Control style={{height: '70px'}} size="lg" type="text" placeholder="Tp. Hồ Chí Minh" />
-                                            </Form.Group>
-                                            <img className="switch-location mb-3" 
-                                            src="https://futabus.vn/images/icons/switch_location.svg" 
-                                            alt="switch location icon" />
-                                            <Form.Group className="mb-3">
-                                                <Form.Label className='fw-bold'>Điểm đến</Form.Label>
-                                                <Form.Control style={{height: '70px'}} size="lg" type="text" placeholder="Hà Nội" />
-                                            </Form.Group>
-                                        </Col>
-                                        <Col className='d-flex ms-2 justify-content-between'>
-                                            <Form.Group className="mb-3 date-width">
-                                                <Form.Label className='fw-bold'>Ngày đi</Form.Label>
-                                                <div style={{ position: "relative"}}>
-                                                    <DatePicker
-                                                        selected={selectedDate}
-                                                        onChange={(date) => setSelectedDate(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        placeholder = '30/03/2024'
-                                                        className="form-control form-control-lg custom-datepick"
-                                                    />
-                                                </div>
-                                            </Form.Group>
-                                            <Form.Group className="mb-3 date-width">
-                                                <Form.Label className='fw-bold'>Ngày về</Form.Label>
-                                                <div style={{ position: "relative"}}>
-                                                    <DatePicker
-                                                        selected={selectedDate}
-                                                        onChange={(date) => setSelectedDate(date)}
-                                                        dateFormat="dd/MM/yyyy"
-                                                        placeholder = '30/03/2024'
-                                                        className="form-control form-control-lg custom-datepick"
-                                                    />
-                                                </div>
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label className='fw-bold'>Ngày về</Form.Label>
-                                                <Form.Select className='select-custom' defaultValue="1">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </Form.Select>
-                                            </Form.Group>
-                                        </Col>
-                                    </Row>
-                                </Container>
-                                <div className='d-flex justify-content-center position-relative w-100'>
-                                    <Button variant="primary" type="submit" className='btn-search-homepage'>
-                                        Tìm chuyến xe
-                                    </Button>
+
+                        <form className="Home">
+                            <div className="LoaiVe row">
+                                <div className="col-2 form-check">
+                                    <input className="form-check-input" type="radio" id="MotChieu" onClick={() => setLoaiVe('MotChieu')} checked={LoaiVe === 'MotChieu'}/>
+                                    <label className="form-check-label" for="MotChieu" onClick={() => setLoaiVe('MotChieu') }>
+                                        Một Chiều
+                                    </label>
                                 </div>
-                            </form>
-                        </div>
+                                
+                                <div className="col-2 form-check">
+                                    <input className="form-check-input" type="radio" id="KhuHoi" onClick={() => setLoaiVe('KhuHoi')} checked={LoaiVe === 'KhuHoi'} />
+                                    <label className="form-check-label" for="KhuHoi" onClick={() => setLoaiVe('KhuHoi')}>
+                                        Khứ Hồi
+                                    </label>
+                                </div>
+
+                                <div className="col Huongdan" align="right">
+
+                                    <p onClick={huongdan}>Hướng dẫn mua vé</p>
+
+                                </div>
+                            </div> 
+                            
+                            <div className="DiaDiem row">
+                                <div class="dropdown col-3">
+                                    <p>Điểm đi</p>
+                                    {/* <input class="DiaDiem-btn dropdown-toggle" 
+                                        type="text" 
+                                        data-bs-toggle="dropdown"
+                                        defaultValue={DiemDi} 
+                                        onChange={handleDiemDiChange}
+
+                                    /> */}
+
+                                    <div class="DiaDiem-btn" data-bs-toggle="dropdown">
+                                        {DiemDi}
+                                    </div>
+
+                                    <ul class="dropdown-menu">
+                                        {DSDiemDi.map(item => (
+                                            <li><a class="dropdown-item" onClick={() => {setDiemDi(item)}}>{item}</a></li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <img class="col-1" src={'https://futabus.vn/images/icons/switch_location.svg'} onClick={swapDiaDiem}/>
+
+                                <div class="dropdown col-3">
+
+                                    <p>Điểm đến</p>
+                                    {/* <input class="DiaDiem-btn dropdown-toggle" 
+                                        type="text" 
+                                        data-bs-toggle="dropdown" 
+                                        defaultValue={DiemDen}
+                                        onChange={handleDiemDenChange}
+
+                                    /> */}
+
+                                    <div class="DiaDiem-btn" data-bs-toggle="dropdown">
+                                        {DiemDen}
+                                    </div>
+
+                                    <ul class="dropdown-menu">
+                                        {DSDiemDen.map(item => (
+                                        <li><a class="dropdown-item" onClick={() => {setDiemDen(item)}}>{item}</a></li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                {LoaiVe == 'MotChieu' ? (
+                                    <>
+                                        <div class="col-3">
+                                            <p>Ngày đi</p>
+                                            <input class="NgayDi" 
+                                                type="date" 
+                                            />
+
+                                        </div>
+
+                                        <div class="dropdown col-2">
+
+                                            <p>Số vé</p>
+                                            <button class="SoVe-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <p>{SoVe}</p>
+                                                <img src={dropdown} align="right"/>
+                                            </button>
+
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(1)}}>1</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(2)}}>2</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(3)}}>3</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(4)}}>4</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(5)}}>5</a></li>
+                                            </ul>
+
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div class="dropdown col-2">
+                                            <p>Ngày đi</p>
+                                            <input class="NgayDi" 
+                                                type="date" 
+                                            />
+
+                                        </div>
+
+                                        <div class="dropdown col-2">
+                                            <p>Ngày về</p>
+                                            <input class="NgayDi" 
+                                                type="date" 
+                                            />
+                                        </div>
+
+                                        <div class="dropdown col-1">
+
+                                            <p>Số vé</p>
+                                            <button class="SoVe-btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <p>
+                                                    {SoVe}
+                                                </p>
+                                                <img src={dropdown} align="right"/>
+                                            </button>
+
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(1)}}>1</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(2)}}>2</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(3)}}>3</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(4)}}>4</a></li>
+                                                <li><a class="dropdown-item" onClick={() => {setSoVe(5)}}>5</a></li>
+                                            </ul>
+                                        </div>
+                                    </>
+                                )}
+
+                            </div>
+                            
+                            <div class="TimChuyen-btn" align="center" onClick={timchuyen}>
+                                Tìm Chuyến 
+                            </div>
+
+                        </form>
+
                     </div>
                 </section>
             </main>
