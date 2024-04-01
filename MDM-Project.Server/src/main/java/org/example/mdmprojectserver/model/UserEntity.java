@@ -17,6 +17,7 @@ public class UserEntity {
     private int id;
     private String phoneNumber;
     private String password;
+    private String customerId;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(

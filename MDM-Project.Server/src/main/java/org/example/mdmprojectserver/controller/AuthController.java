@@ -3,8 +3,10 @@ package org.example.mdmprojectserver.controller;
 import org.example.mdmprojectserver.dto.AuthResponseDto;
 import org.example.mdmprojectserver.dto.LoginDto;
 import org.example.mdmprojectserver.dto.RegisterDto;
+import org.example.mdmprojectserver.model.Customer;
 import org.example.mdmprojectserver.model.Role;
 import org.example.mdmprojectserver.model.UserEntity;
+import org.example.mdmprojectserver.repository.CustomerRepository;
 import org.example.mdmprojectserver.repository.RoleRepository;
 import org.example.mdmprojectserver.repository.UserRepository;
 import org.example.mdmprojectserver.security.JWTGenerator;
@@ -33,15 +35,17 @@ public class AuthController {
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
     private JWTGenerator jwtGenerator;
-
+    private CustomerRepository customerRepository;
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
+                          RoleRepository roleRepository, PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator, CustomerRepository customerRepository)
+    {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtGenerator = jwtGenerator;
+        this.customerRepository = customerRepository;
     }
 
     @PostMapping("register")
@@ -49,14 +53,33 @@ public class AuthController {
         if(userRepository.existsByPhoneNumber(registerDto.getPhoneNumber())) {
             return new ResponseEntity<>("Phone number is already in the system", HttpStatus.BAD_REQUEST);
         }
+
+        //Create a new customer information for the account
+        Customer customer = new Customer();
+        customer.setPhone(registerDto.getPhoneNumber());
+        customer.setEmail(registerDto.getEmail());
+        customer.setName(registerDto.getName());
+
+        // Get the id of the customer
+        String customerId =  customerRepository.save(customer).getId();
+
+        //Create a new account
         UserEntity user = new UserEntity();
         user.setPhoneNumber(registerDto.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        // Set the customer id to the user
+        user.setCustomerId(customerId);
 
         Role roles = roleRepository.findByName("USER").get();
         user.setRoles(Collections.singletonList(roles));
 
-        userRepository.save(user);
+        // Get the id of the user
+        int userEntityId = userRepository.save(user).getId();
+        // Set the user id to the customer
+        customer.setUserEntityId(Integer.toString(userEntityId));
+        // Update the customer
+        customerRepository.save(customer);
+
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
     }
 
@@ -67,6 +90,16 @@ public class AuthController {
                         loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        return new ResponseEntity<>(new AuthResponseDto(token), HttpStatus.OK);
+
+        // Find the UserEntity by phone number
+        UserEntity userEntity = userRepository.findByPhoneNumber(loginDto.getPhoneNumber()).orElse(null);
+        if (userEntity == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        // Get the customer ID from the UserEntity
+        String customerId = userEntity.getCustomerId();
+
+        return new ResponseEntity<>(new AuthResponseDto(token, customerId), HttpStatus.OK);
     }
 }

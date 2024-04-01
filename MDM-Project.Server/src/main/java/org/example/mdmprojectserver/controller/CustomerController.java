@@ -30,7 +30,7 @@ public class CustomerController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
         }
-        Customer customer = new Customer(newCustomerDto.getName(), newCustomerDto.getGender(), newCustomerDto.getEmail(),newCustomerDto.getPhone());
+        Customer customer = new Customer(newCustomerDto.getName(), newCustomerDto.getGender(), newCustomerDto.getEmail(),newCustomerDto.getPhone(), newCustomerDto.getAddress(), newCustomerDto.getJob());
         return ResponseEntity.ok(customerRepository.save(customer));
     }
 
