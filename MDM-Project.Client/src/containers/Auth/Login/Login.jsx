@@ -29,6 +29,7 @@ const Login = () => {
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('customerId', response.data.customerId);
                 localStorage.setItem('isLoggedIn', true);
+                window.location.reload();
                 navigate('/');
             } else {
                 const message = response.data.message || 'An error occurred while login';

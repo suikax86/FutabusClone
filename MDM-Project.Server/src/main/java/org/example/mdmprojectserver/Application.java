@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 //TODO: UserEntity&Customer mapping
 //TODO: Buses: embedded seats, ticket
@@ -24,6 +25,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application implements CommandLineRunner {
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
 
@@ -36,6 +40,11 @@ public class Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         logger.info("Hello, World!");
 
+        for (String collectionName : mongoTemplate.getCollectionNames()) {
+            mongoTemplate.dropCollection(collectionName);
+            logger.info("Xóa tất cả dữ liệu trong bảng " + collectionName + " trong mongodb thành công!");
+        }
+
         //Insert sample data
         if(roleRepository.count() == 0) {
             Role role1 = new Role(1,"USER");
@@ -43,7 +52,6 @@ public class Application implements CommandLineRunner {
             roleRepository.save(role1);
             roleRepository.save(role2);
             logger.info("Thêm dữ liệu mẫu vào bảng roles trong postgresql thành công!");
-
         }
     }
 }

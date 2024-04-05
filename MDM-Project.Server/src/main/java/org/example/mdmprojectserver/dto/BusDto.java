@@ -1,6 +1,10 @@
 package org.example.mdmprojectserver.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.mdmprojectserver.model.enums.BusType;
+import org.example.mdmprojectserver.model.enums.DepartureTimeType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,4 +18,7 @@ public class BusDto {
     public Double fare;
     public List<String> boardingPoints;
     public List<String> droppingPoints;
+    public BusType busType;
+
+
 }

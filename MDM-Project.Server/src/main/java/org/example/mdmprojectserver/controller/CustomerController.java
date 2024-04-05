@@ -25,6 +25,11 @@ public class CustomerController {
         return customerRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCustomer(@PathVariable String id) {
+        return ResponseEntity.ok(customerRepository.findById(id));
+    }
+
     @PostMapping()
     public ResponseEntity<?> newCustomer(@Valid @RequestBody CustomerDto newCustomerDto, BindingResult result) {
         if (result.hasErrors()) {

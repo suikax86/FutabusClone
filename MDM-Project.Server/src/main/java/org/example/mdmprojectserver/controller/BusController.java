@@ -1,10 +1,7 @@
 package org.example.mdmprojectserver.controller;
 
-import jakarta.validation.Valid;
 import org.example.mdmprojectserver.dto.BusDto;
-import org.example.mdmprojectserver.dto.CustomerDto;
 import org.example.mdmprojectserver.model.Bus;
-import org.example.mdmprojectserver.model.Customer;
 import org.example.mdmprojectserver.repository.BusRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,17 +17,19 @@ public class BusController {
         this.busRepository = busRepository;
     }
 
-    @GetMapping()
-    public List<Bus> getCustomers() {
+    @GetMapping("/")
+    public List<Bus> getBuses() {
         return this.busRepository.findAll();
     }
 
-    @PostMapping()
+    @PostMapping("/")
     public ResponseEntity<?> newBus(@RequestBody BusDto newBusDto, BindingResult result) {
+
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
         }
-        Bus bus = new Bus(newBusDto.getDepartureTime(), newBusDto.getDepartureLocation(), newBusDto.getArrivalTime(), newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints());
+        Bus bus = new Bus(newBusDto.getDepartureTime(), newBusDto.getDepartureLocation(), newBusDto.getArrivalTime(), newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints(), newBusDto.getBusType());
+
         return ResponseEntity.ok(this.busRepository.save(bus));
     }
     @DeleteMapping("/{id}")
