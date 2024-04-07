@@ -6,7 +6,6 @@ import org.example.mdmprojectserver.model.Role;
 import org.example.mdmprojectserver.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,13 +22,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "MDM Project API", version = "1.0", description = "MDM Project API"))
 public class Application implements CommandLineRunner {
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    private final RoleRepository roleRepository;
+    private final MongoTemplate mongoTemplate;
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
+    public Application(RoleRepository roleRepository, MongoTemplate mongoTemplate) {
+        this.roleRepository = roleRepository;
+        this.mongoTemplate = mongoTemplate;
+    }
 
 
     public static void main(String[] args) {
@@ -37,12 +37,12 @@ public class Application implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         logger.info("Hello, World!");
 
         for (String collectionName : mongoTemplate.getCollectionNames()) {
             mongoTemplate.dropCollection(collectionName);
-            logger.info("Xóa tất cả dữ liệu trong bảng " + collectionName + " trong mongodb thành công!");
+            logger.info("Xóa tất cả dữ liệu trong bảng {} trong mongodb thành công!", collectionName);
         }
 
         //Insert sample data
