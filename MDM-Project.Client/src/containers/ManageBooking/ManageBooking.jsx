@@ -281,26 +281,29 @@ const ManageBooking = () => {
                         
                         <div class="col">
                             <div class="FastFilter row">
-                                <div class="icon col-2 row">
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter1" />
+                                <label class="icon col-2 row form-check-label" for="FastFilter1">
                                     <img class='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
                                     <div class="col">
                                         Giá rẻ bất ngờ
                                     </div>
-                                </div>
+                                </label>
 
-                                <div class="icon col-2 row">
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter2" />
+                                <label class="icon row form-check-label" for="FastFilter2">
                                     <img class='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
                                     <div class="col">
                                         Giờ khởi hành
                                     </div>
-                                </div>
+                                </label>
 
-                                <div class="icon col-2 row">
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter3" />
+                                <label class="icon row col-2 form-check-label" for="FastFilter3">
                                     <img class='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
                                     <div class="col">
                                         Ghế trống
                                     </div>
-                                </div>
+                                </label>
 
                             </div>
 

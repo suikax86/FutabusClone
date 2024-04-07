@@ -72,9 +72,10 @@
             margin: auto;
             padding: 0;
             padding-left: 5px;
+            
         }
         .icon{
-            background-color: #ff9f5177;
+            border: solid 1px #c2c2c2;
             margin: 5px 10px;
             width: auto;
             padding: 5px;
@@ -85,9 +86,26 @@
                 margin: auto;
             }
         }
-        .icon:hover{
-            background-color: #ff9f51;
+
+
+        input{
+            display: none;
         }
+
+        .form-check-input:checked + .form-check-label{
+            color: #ff7300;
+            border: solid 1px #ff7300;
+            transition: 0.1s ease;
+            background: #ff730018;
+        }   
+
+        .form-check-input:checked + .form-check-label img{
+            filter: invert(47%) sepia(42%) saturate(6373%) hue-rotate(349deg) brightness(96%) contrast(94%);
+        }
+
+        .form-check-input + .form-check-label{
+            transition: 0.1s ease;
+        }  
     }
 
     .DanhSach{
