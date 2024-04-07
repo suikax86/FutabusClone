@@ -47,9 +47,11 @@
             }
 
             label{
-                border: solid 1px #000;
+                border: solid 1px #c2c2c2;
                 padding: 3px 10px;
                 border-radius: 5px;
+                cursor: pointer;
+                user-select: none;
             }
             .form-check-input:checked + .form-check-label{
                 color: #ff7300;
