@@ -54,7 +54,7 @@ public class BusController {
             seatRepository.save(seat);
         }
 
-        return ResponseEntity.ok(savedBus);
+        return ResponseEntity.ok(this.busRepository.save(bus));
     }
     @DeleteMapping("/{id}")
     public void deleteBus(@PathVariable String id) {
