@@ -18,7 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/lich-trinh" element={<Schedule />} />
-      <Route path="/tra-cuu-ve" element={<ManageBooking />} />
+      <Route path="/dat-ve" element={<ManageBooking />} />
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

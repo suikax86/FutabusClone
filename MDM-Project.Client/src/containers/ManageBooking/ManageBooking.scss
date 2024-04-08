@@ -2,10 +2,110 @@
     width: 1128px;
     margin: auto !important;
     margin-top: 50px !important;
+    
     .Filter{
         height: 500px;
-        background-color: #888888;
         border-radius: 12.5px;
+        box-shadow: 1px 1px 5px #c2c2c2;
+        margin-bottom: 50px;
+
+        h2{
+            font-size: 21px;
+            margin: 10px;
+            margin-bottom:30px;
+        }
+
+        h3{
+            margin: 10px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .form-check-input:focus{
+            box-shadow: none;
+            border: solid 1px #ff7300;
+        }
+
+        .form-check-input:checked{
+            background-color: #ff7300;
+            border: solid 1px #ff7300;
+        }
+
+        .row{
+            h3{
+                padding-left: 0;
+            }
+
+            margin-left: 5px;
+            .col-2{
+                width: auto;
+                padding: 0;
+                margin: 0 5px;
+            }
+            input{
+                display: none;
+            }
+
+            label{
+                border: solid 1px #c2c2c2;
+                padding: 3px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+                user-select: none;
+            }
+            .form-check-input:checked + .form-check-label{
+                color: #ff7300;
+                border: solid 1px #ff7300;
+                transition: 0.1s ease;
+            }   
+
+            .form-check-input + .form-check-label{
+                transition: 0.1s ease;
+            }  
+        }
+    }
+
+    .FastFilter{
+        margin-left: 5px;
+        img{
+            height: 20px;
+            margin: auto;
+            padding: 0;
+            padding-left: 5px;
+            
+        }
+        .icon{
+            border: solid 1px #c2c2c2;
+            margin: 5px 10px;
+            width: auto;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            .col{
+                margin: auto;
+            }
+        }
+
+
+        input{
+            display: none;
+        }
+
+        .form-check-input:checked + .form-check-label{
+            color: #ff7300;
+            border: solid 1px #ff7300;
+            transition: 0.1s ease;
+            background: #ff730018;
+        }   
+
+        .form-check-input:checked + .form-check-label img{
+            filter: invert(47%) sepia(42%) saturate(6373%) hue-rotate(349deg) brightness(96%) contrast(94%);
+        }
+
+        .form-check-input + .form-check-label{
+            transition: 0.1s ease;
+        }  
     }
 
     .DanhSach{

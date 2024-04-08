@@ -39,7 +39,7 @@ const HomePage = () => {
       }
   
       const timchuyen = () => {
-          navigate('/tra-cuu-ve')
+          navigate('/dat-ve')
       }
   
       const [DiemDi, setDiemDi] = useState('');
