@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.scss';
+import { useAuth } from '../../../services/auth';
 
 import Header from '../../HomePages/Header';
 import axios from "axios";
 
 const Login = () => {
+    const { isLoggedIn, login, logout } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         phoneNumber: '',
@@ -28,9 +30,9 @@ const Login = () => {
                 // Save accessToken, customerId, and isLoggedIn to localStorage
                 localStorage.setItem('accessToken', response.data.accessToken);
                 localStorage.setItem('customerId', response.data.customerId);
-                localStorage.setItem('isLoggedIn', true);
-                window.location.reload();
+                /* localStorage.setItem('isLoggedIn', true); */
                 navigate('/');
+                login();
             } else {
                 const message = response.data.message || 'An error occurred while login';
                 alert(message);
