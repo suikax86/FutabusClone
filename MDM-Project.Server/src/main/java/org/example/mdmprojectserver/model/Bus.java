@@ -41,7 +41,7 @@ public class Bus {
 
         // Create 21 new seats and add them to the bus
         for(int i = 1; i <= 21; i++) {
-            this.seats.add(new Seat("A" + 1));
+            this.seats.add(new Seat("A" + i));
         }
     }
 

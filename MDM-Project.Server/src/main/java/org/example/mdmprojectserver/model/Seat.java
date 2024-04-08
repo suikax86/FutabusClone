@@ -9,8 +9,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Seat {
     @Id
     public String id;
+    public String busId;
     public String seatNumber;
     public Boolean isBooked;
+
 
     public Seat(String seatNumber) {
         this.seatNumber = seatNumber;

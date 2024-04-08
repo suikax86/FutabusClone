@@ -29,6 +29,11 @@ public class BusController {
         return this.busRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBus(@PathVariable String id) {
+        return ResponseEntity.ok(this.busRepository.findById(id));
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> newBus(@RequestBody BusDto newBusDto, BindingResult result) {
         if (result.hasErrors()) {
@@ -40,9 +45,16 @@ public class BusController {
         LocalDateTime arrivalTime = LocalDateTime.parse(newBusDto.getArrivalTime(), formatter);
 
         Bus bus = new Bus(departureTime, newBusDto.getDepartureLocation(), arrivalTime, newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints(), newBusDto.getBusType());
-
         seatRepository.saveAll(bus.getSeats());
-        return ResponseEntity.ok(this.busRepository.save(bus));
+
+        Bus savedBus = this.busRepository.save(bus);
+
+        for (Seat seat : savedBus.getSeats()) {
+            seat.setBusId(savedBus.getId());
+            seatRepository.save(seat);
+        }
+
+        return ResponseEntity.ok(savedBus);
     }
     @DeleteMapping("/{id}")
     public void deleteBus(@PathVariable String id) {
