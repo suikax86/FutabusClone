@@ -2,10 +2,15 @@ package org.example.mdmprojectserver.controller;
 
 import org.example.mdmprojectserver.dto.BusDto;
 import org.example.mdmprojectserver.model.Bus;
+import org.example.mdmprojectserver.model.Seat;
 import org.example.mdmprojectserver.repository.BusRepository;
+import org.example.mdmprojectserver.repository.SeatRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -13,8 +18,10 @@ import java.util.List;
 @RequestMapping("/api/buses")
 public class BusController {
     private final BusRepository busRepository;
-    public BusController(BusRepository busRepository) {
+    private final SeatRepository seatRepository;
+    public BusController(BusRepository busRepository, SeatRepository seatRepository) {
         this.busRepository = busRepository;
+        this.seatRepository = seatRepository;
     }
 
     @GetMapping("/")
@@ -24,12 +31,17 @@ public class BusController {
 
     @PostMapping("/")
     public ResponseEntity<?> newBus(@RequestBody BusDto newBusDto, BindingResult result) {
-
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
         }
-        Bus bus = new Bus(newBusDto.getDepartureTime(), newBusDto.getDepartureLocation(), newBusDto.getArrivalTime(), newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints(), newBusDto.getBusType());
+        //Format the date time to a specific format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm");
+        LocalDateTime departureTime = LocalDateTime.parse(newBusDto.getDepartureTime(), formatter);
+        LocalDateTime arrivalTime = LocalDateTime.parse(newBusDto.getArrivalTime(), formatter);
 
+        Bus bus = new Bus(departureTime, newBusDto.getDepartureLocation(), arrivalTime, newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints(), newBusDto.getBusType());
+
+        seatRepository.saveAll(bus.getSeats());
         return ResponseEntity.ok(this.busRepository.save(bus));
     }
     @DeleteMapping("/{id}")

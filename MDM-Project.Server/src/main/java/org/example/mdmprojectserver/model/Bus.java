@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,22 +24,25 @@ public class Bus {
     public List<String> boardingPoints;
     public List<String> droppingPoints;
     public BusType busType;
+    public List<Seat> seats = new ArrayList<>();
 
-
-    public Bus(String departureTime, String departureLocation,
-               String arrivalTime, String arrivalLocation, Double fare,
+    public Bus(LocalDateTime departureTime, String departureLocation,
+               LocalDateTime arrivalTime, String arrivalLocation, Double fare,
                List<String> boardingPoints, List<String> droppingPoints, BusType busType) {
-        //Format the date time to a specific format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm");
-        this.departureTime = LocalDateTime.parse(departureTime, formatter);
+        this.departureTime = departureTime;
         setDepartureTimeType();
         this.departureLocation = departureLocation;
-        this.arrivalTime = LocalDateTime.parse(arrivalTime, formatter);
+        this.arrivalTime = arrivalTime;
         this.arrivalLocation = arrivalLocation;
         this.fare = fare;
         this.boardingPoints = boardingPoints;
         this.droppingPoints = droppingPoints;
         this.busType = busType;
+
+        // Create 21 new seats and add them to the bus
+        for(int i = 1; i <= 21; i++) {
+            this.seats.add(new Seat("A" + 1));
+        }
     }
 
     public void setDepartureTimeType() {
