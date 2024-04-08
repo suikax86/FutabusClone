@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export const AuthProvider = ({ children }) => {
         const storedLoggedIn = localStorage.getItem('isLoggedIn');
         return storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
     });
+
 
     const login = () => {
         // Thực hiện các bước đăng nhập thành công
