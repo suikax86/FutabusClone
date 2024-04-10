@@ -39,7 +39,7 @@ const HomePage = () => {
       }
   
       const timchuyen = () => {
-          navigate('/tra-cuu-ve')
+          alert('Tìm chuyến');
       }
   
       const [DiemDi, setDiemDi] = useState('');

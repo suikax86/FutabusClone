@@ -4,7 +4,7 @@ import './App.scss'
 
 import HomePage from './containers/HomePages/HomePage';
 import Schedule from './containers/Schedule/Schedule';
-import ManageBooking from './containers/ManageBooking/ManageBooking';
+import LookupTickets from './containers/LookupTickets/LookupTickets';
 import Invoice from './containers/Invoice/Invoice';
 import Login from './containers/Auth/Login/Login';
 import Register from './containers/Auth/Register/Register';
@@ -18,7 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/lich-trinh" element={<Schedule />} />
-      <Route path="/tra-cuu-ve" element={<ManageBooking />} />
+      <Route path="/tra-cuu-ve" element={<LookupTickets />} />
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
