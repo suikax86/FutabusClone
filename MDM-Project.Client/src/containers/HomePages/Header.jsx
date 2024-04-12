@@ -1,18 +1,40 @@
 ﻿import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Navigate, Link } from 'react-router-dom';
 import { useAuth } from '../../services/auth';
+import axios from 'axios';
 
 import './Header.scss';
 
 const Header = () => {
 
     const { isLoggedIn, login, logout } = useAuth();
+    const customerId = localStorage.getItem('customerId');
+    const [userName, setUserName] = useState('');
     
     const [openMenuAccount, setOpenMenuAccount] = useState(false);
 
     const showMenuAccount = () => {
         setOpenMenuAccount(prevState => !prevState);
     }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            const fetchData = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:8080/api/customers/${customerId}`);
+                    if (response.status === 200) {
+                        setUserName(response.data.name);
+                        /* console.log(response.data.name); */
+                    } else {
+                        console.error("Error fetching user data");
+                    }
+                } catch (error) {
+                    console.error("Error during API request:", error);
+                }
+            };
+            fetchData();
+        }
+    }, []);
 
 
     return (
@@ -28,7 +50,7 @@ const Header = () => {
                         {isLoggedIn ? (
                         <div className='d-flex logged-section' onClick={showMenuAccount}>
                             <img src = 'https://futabus.vn/images/icons/person.svg' className='img-person'/>
-                            <span className='account-name'>Nguyễn Văn A</span>
+                            <span className='account-name'>{userName}</span>
                             <img src='https://futabus.vn/images/icons/icon_form_droplist.svg'/>
                             <div className={`menu-account ${openMenuAccount ? "d-block" : "d-none"}`}>
                                 <ul className='menu-account-content'>
