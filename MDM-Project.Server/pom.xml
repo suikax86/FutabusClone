@@ -109,6 +109,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.neo4j.driver</groupId>
+            <artifactId>neo4j-java-driver</artifactId>
+            <version>5.19.0</version>
+        </dependency>
+
 
     </dependencies>
 
