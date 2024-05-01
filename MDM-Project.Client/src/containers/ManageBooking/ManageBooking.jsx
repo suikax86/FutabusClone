@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import DatePicker from 'react-datepicker';
 import './ManageBooking.scss';
 import '../HomePages/HomePage.scss'
 import Header from '../HomePages/Header';
@@ -32,7 +32,7 @@ const ManageBooking = () => {
       }
   
       const timchuyen = () => {
-          navigate('/tra-cuu-ve')
+          navigate('/dat-ve')
       }
   
       const [DiemDi, setDiemDi] = useState('');
@@ -45,22 +45,16 @@ const ManageBooking = () => {
         setDiemDen(temp);
       }
 
-      // const handleDiemDiChange = (event) => {
-      //     const newValue = event.target.value;
-      //     console.log(DiemDi);
-      //     setDiemDi(newValue);
-      // };
-  
-      // const handleDiemDenChange = (event) => {
-      //     const newValue = event.target.value;
-      //     setDiemDen(newValue);
-      // };
-
     //TODO: tạo hàm gọi API trả về 
     const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
     const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
-  
-      const [LoaiVe, setLoaiVe] = useState('MotChieu');
+
+    const [LoaiVe, setLoaiVe] = useState('MotChieu');
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [returnDate, setReturnDate] = useState(new Date());
+
+    
     return (
         <React.Fragment>
             <Header />
@@ -143,9 +137,7 @@ const ManageBooking = () => {
                                     <>
                                         <div class="col-3">
                                             <p>Ngày đi</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={startDate} onChange={(date) => setStartDate(date)} />
 
                                         </div>
 
@@ -171,17 +163,13 @@ const ManageBooking = () => {
                                     <>
                                         <div class="dropdown col-2">
                                             <p>Ngày đi</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={startDate} onChange={(date) => setStartDate(date)} />
 
                                         </div>
 
                                         <div class="dropdown col-2">
                                             <p>Ngày về</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={returnDate} onChange={(date) => setReturnDate(date)} />
                                         </div>
 
                                         <div class="dropdown col-1">
@@ -216,71 +204,167 @@ const ManageBooking = () => {
                     </div>
                     <div class="DSContainer row">
                         <div class="Filter col-3">
-                            Filter
+                            <h2>Bộ lọc tìm kiếm</h2>
+                            <div>
+                                <h3>Giờ đi</h3>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi1" />
+                                    <label class="form-check-label" for="FilterGioDi1">
+                                        Sáng sớm 00:00 - 06:00 (0)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi2"/>
+                                    <label class="form-check-label" for="FilterGioDi2">
+                                        Buổi sáng 06:00 - 12:00
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi3"/>
+                                    <label class="form-check-label" for="FilterGioDi3">
+                                        Buổi chiều 12:00 - 18:00
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi4"/>
+                                    <label class="form-check-label" for="FilterGioDi4">
+                                        Buổi tối 18:00 - 24:00
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class='row'>
+                                <h3>Loại xe</h3>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe1" />
+                                    <label class="form-check-label" for="FilterLoaiXe1">
+                                        Ghế
+                                    </label>
+                                </div>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe2"/>
+                                    <label class="form-check-label" for="FilterLoaiXe2">
+                                        Giường
+                                    </label>
+                                </div>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe3"/>
+                                    <label class="form-check-label" for="FilterLoaiXe3">
+                                        Limousine
+                                    </label>
+                                </div>
+
+                            </div>
                         </div>
+                        
+                        <div class="col">
+                            <div className="FastFilter row">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter1"/>
+                                <label className="icon col-2 row form-check-label" htmlFor="FastFilter1">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá tăng dần
+                                    </div>
+                                </label>
 
-                        <div class="DanhSach col">
-                            <div class="ChuyenXe row">
-                                <div class="TGDi col-1">
-                                    <h1> 16:30 </h1>
-                                    <p> Bến xe Rạch Sỏi</p>
-                                </div>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter2"/>
+                                <label className="icon row form-check-label" htmlFor="FastFilter2">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá giảm dần
+                                    </div>
+                                </label>
 
-                                <div class="DiChuyen col-1">
-                                    <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
-                                    <p>----------</p>
-                                    <p>4 giờ</p>
-                                    <p>----------</p>
-                                    <img src={'https://futabus.vn/images/icons/station.svg'}/>
-                                </div>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter3"/>
+                                <label className="icon row col-2 form-check-label" htmlFor="FastFilter3">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
+                                    <div className="col">
+                                        Giờ khởi hành
+                                    </div>
+                                </label>
 
-                                <div class="TGDi col-1">
-                                    <h1> 19:30 </h1>
-                                    <p> Bến xe Miền Tây</p>
-                                </div>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter4"/>
+                                <label className="icon row col-2 form-check-label" htmlFor="FastFilter4">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
+                                    <div className="col">
+                                        Ghế trống
+                                    </div>
+                                </label>
 
-                                <div class="col-1">
-                                    Limosine
-                                </div>
-
-                                <div class="col-1">
-                                    16 chỗ trống <br />
-                                    <p class="Gia">190.000đ</p>
-                                </div>
-                            </div>
-                            
-                            <div class="ChuyenXe row">
-                                <div class="TGDi col-1">
-                                    <h1> 16:30 </h1>
-                                    <p> Bến xe Rạch Sỏi</p>
-                                </div>
-
-                                <div class="DiChuyen col-1">
-                                    <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
-                                    <p>----------</p>
-                                    <p>4 giờ</p>
-                                    <p>----------</p>
-                                    <img src={'https://futabus.vn/images/icons/station.svg'}/>
-                                </div>
-
-                                <div class="TGDi col-1">
-                                    <h1> 19:30 </h1>
-                                    <p> Bến xe Miền Tây</p>
-                                </div>
-
-                                <div class="col-1">
-                                    Limosine
-                                </div>
-
-                                <div class="col-1">
-                                    16 chỗ trống <br />
-                                    <p class="Gia">190.000đ</p>
-                                </div>
                             </div>
 
+                            <div class="DanhSach">
+                                <div class="ChuyenXe row">
+                                    <div class="TGDi col-1">
+                                        <h1> 16:30 </h1>
+                                        <p> Bến xe Rạch Sỏi</p>
+                                    </div>
 
-                            
-                            
+                                    <div class="DiChuyen col-1">
+                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
+                                        <p>----------</p>
+                                        <p>4 giờ</p>
+                                        <p>----------</p>
+                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
+                                    </div>
+
+                                    <div class="TGDi col-1">
+                                        <h1> 19:30 </h1>
+                                        <p> Bến xe Miền Tây</p>
+                                    </div>
+
+                                    <div class="col-1">
+                                        Limosine
+                                    </div>
+
+                                    <div class="col-1">
+                                        16 chỗ trống <br />
+                                        <p class="Gia">190.000đ</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ChuyenXe row">
+                                    <div class="TGDi col-1">
+                                        <h1> 16:30 </h1>
+                                        <p> Bến xe Rạch Sỏi</p>
+                                    </div>
+
+                                    <div class="DiChuyen col-1">
+                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
+                                        <p>----------</p>
+                                        <p>4 giờ</p>
+                                        <p>----------</p>
+                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
+                                    </div>
+
+                                    <div class="TGDi col-1">
+                                        <h1> 19:30 </h1>
+                                        <p> Bến xe Miền Tây</p>
+                                    </div>
+
+                                    <div class="col-1">
+                                        Limosine
+                                    </div>
+
+                                    <div class="col-1">
+                                        16 chỗ trống <br />
+                                        <p class="Gia">190.000đ</p>
+                                    </div>
+                                </div>
+
+
+                                
+                                
+                            </div>
                         </div>
                     </div>
                 </section>

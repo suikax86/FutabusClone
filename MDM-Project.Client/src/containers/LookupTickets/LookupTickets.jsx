@@ -4,27 +4,28 @@ import { Form, Button } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 
-import './Invoice.scss';
+import './LookupTickets.scss';
 import Header from '../HomePages/Header';
 
-const Invoice = () => {
 
-    const [formLookupInvoice, setFormLookupInVoice] = useState({
-        secretID: '',
-        invoiceID: ''
+const LookupTickets = () => {
+    
+    const [formLookup, setFormLookup] = useState({
+        phoneNumber: '',
+        ticketID: ''
     });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormLookupInVoice({
-            ...formLookupInvoice,
+        setFormLookup({
+            ...formLookup,
             [name]: value
         });
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(formLookupInvoice);
+        console.log(formLookup);
     };
 
     return (
@@ -32,31 +33,31 @@ const Invoice = () => {
             <Header />
             <main>
                 <div className = 'layout'>
-                    <div className='lookup-invoice-title'>TRA CỨU THÔNG TIN HÓA ĐƠN</div>
+                    <div className='lookup-title'>TRA CỨU THÔNG TIN ĐẶT VÉ</div>
                     <form onSubmit={handleSubmit}>
                         <Container>
                             <Row>
                                 <Form.Group>
-                                    <Form.Control type='text' placeholder='Mã số bí mật (Không biết input là gì, t ghi đại :V)'
-                                                name='secretID'
-                                                value={formLookupInvoice.secretID}
+                                    <Form.Control type='text' placeholder='Vui lòng nhập số điện thoại'
+                                                name='phoneNumber'
+                                                value={formLookup.phoneNumber}
                                                 onChange={handleChange}
                                     ></Form.Control>
                                 </Form.Group>
                             </Row>
                             <Row>
                                 <Form.Group>
-                                    <Form.Control type='text' placeholder='Mã hóa đơn (Không biết input là gì, t ghi đại :V)'
-                                                name='invoiceID'
-                                                value={formLookupInvoice.invoiceID}
+                                    <Form.Control type='text' placeholder='Vui lòng nhập mã vé'
+                                                name='ticketID'
+                                                value={formLookup.ticketID}
                                                 onChange={handleChange}
                                     ></Form.Control>
                                 </Form.Group>
                             </Row>
                         </Container>
                         <div className='d-flex justify-content-center position-relative w-100'>
-                            <Button variant="primary" type='submit' className='btn-lookup-invoice'>
-                                Tra cứu hóa đơn
+                            <Button variant="primary" type='submit' className='btn-lookup-tickets'>
+                                Tra cứu vé
                             </Button>
                         </div>
                     </form>
@@ -66,4 +67,5 @@ const Invoice = () => {
     )
 }
 
-export default Invoice
+
+export default LookupTickets

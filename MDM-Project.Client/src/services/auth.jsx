@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
         return storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
     });
 
+
     const login = () => {
         // Thực hiện các bước đăng nhập thành công
         setIsLoggedIn(true);
