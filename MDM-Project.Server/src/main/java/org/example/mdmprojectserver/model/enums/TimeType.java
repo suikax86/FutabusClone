@@ -1,6 +1,6 @@
 package org.example.mdmprojectserver.model.enums;
 
-public enum DepartureTimeType {
+public enum TimeType {
     EARLY_MORNING,
     MORNING,
     AFTERNOON,

@@ -45,17 +45,6 @@ const ManageBooking = () => {
         setDiemDen(temp);
       }
 
-      // const handleDiemDiChange = (event) => {
-      //     const newValue = event.target.value;
-      //     console.log(DiemDi);
-      //     setDiemDi(newValue);
-      // };
-  
-      // const handleDiemDenChange = (event) => {
-      //     const newValue = event.target.value;
-      //     setDiemDen(newValue);
-      // };
-
     //TODO: tạo hàm gọi API trả về 
     const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
     const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
@@ -65,9 +54,7 @@ const ManageBooking = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [returnDate, setReturnDate] = useState(new Date());
 
-    const FilterGioDi = (FromH, ToH) => {
-        
-    }
+    
     return (
         <React.Fragment>
             <Header />
@@ -231,21 +218,21 @@ const ManageBooking = () => {
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi2"/>
                                     <label class="form-check-label" for="FilterGioDi2">
-                                        Buổi sáng 06:00 - 12:00 (0)
+                                        Buổi sáng 06:00 - 12:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi3"/>
                                     <label class="form-check-label" for="FilterGioDi3">
-                                        Buổi chiều 12:00 - 18:00 (21)
+                                        Buổi chiều 12:00 - 18:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi4"/>
                                     <label class="form-check-label" for="FilterGioDi4">
-                                        Buổi tối 18:00 - 24:00 (38)
+                                        Buổi tối 18:00 - 24:00
                                     </label>
                                 </div>
                             </div>
@@ -280,27 +267,35 @@ const ManageBooking = () => {
                         </div>
                         
                         <div class="col">
-                            <div class="FastFilter row">
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter1" />
-                                <label class="icon col-2 row form-check-label" for="FastFilter1">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
-                                    <div class="col">
-                                        Giá rẻ bất ngờ
+                            <div className="FastFilter row">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter1"/>
+                                <label className="icon col-2 row form-check-label" htmlFor="FastFilter1">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá tăng dần
                                     </div>
                                 </label>
 
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter2" />
-                                <label class="icon row form-check-label" for="FastFilter2">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
-                                    <div class="col">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter2"/>
+                                <label className="icon row form-check-label" htmlFor="FastFilter2">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá giảm dần
+                                    </div>
+                                </label>
+
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter3"/>
+                                <label className="icon row col-2 form-check-label" htmlFor="FastFilter3">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
+                                    <div className="col">
                                         Giờ khởi hành
                                     </div>
                                 </label>
 
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter3" />
-                                <label class="icon row col-2 form-check-label" for="FastFilter3">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
-                                    <div class="col">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter4"/>
+                                <label className="icon row col-2 form-check-label" htmlFor="FastFilter4">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
+                                    <div className="col">
                                         Ghế trống
                                     </div>
                                 </label>

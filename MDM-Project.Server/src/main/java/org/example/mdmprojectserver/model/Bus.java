@@ -2,7 +2,7 @@ package org.example.mdmprojectserver.model;
 
 import lombok.Data;
 import org.example.mdmprojectserver.model.enums.BusType;
-import org.example.mdmprojectserver.model.enums.DepartureTimeType;
+import org.example.mdmprojectserver.model.enums.TimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +17,7 @@ public class Bus {
     public String id;
     public LocalDateTime departureTime;
     public String departureLocation;
-    public DepartureTimeType departureTimeType;
+    public TimeType timeType;
     public LocalDateTime arrivalTime;
     public String arrivalLocation;
     public Double fare;
@@ -30,7 +30,7 @@ public class Bus {
                LocalDateTime arrivalTime, String arrivalLocation, Double fare,
                List<String> boardingPoints, List<String> droppingPoints, BusType busType) {
         this.departureTime = departureTime;
-        setDepartureTimeType();
+        setTimeType();
         this.departureLocation = departureLocation;
         this.arrivalTime = arrivalTime;
         this.arrivalLocation = arrivalLocation;
@@ -45,16 +45,16 @@ public class Bus {
         }
     }
 
-    public void setDepartureTimeType() {
+    public void setTimeType() {
         int hour = this.departureTime.getHour();
         if (hour < 6) {
-            this.departureTimeType = DepartureTimeType.EARLY_MORNING;
+            this.timeType = TimeType.EARLY_MORNING;
         } else if (hour < 12) {
-            this.departureTimeType = DepartureTimeType.MORNING;
+            this.timeType = TimeType.MORNING;
         } else if (hour < 18) {
-            this.departureTimeType = DepartureTimeType.AFTERNOON;
+            this.timeType = TimeType.AFTERNOON;
         } else {
-            this.departureTimeType = DepartureTimeType.NIGHT;
+            this.timeType = TimeType.NIGHT;
         }
     }
 }

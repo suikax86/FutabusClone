@@ -40,10 +40,6 @@ public class Application implements CommandLineRunner {
     public void run(String... args) {
         logger.info("Hello, World!");
 
-        for (String collectionName : mongoTemplate.getCollectionNames()) {
-            mongoTemplate.dropCollection(collectionName);
-            logger.info("Xóa tất cả dữ liệu trong bảng {} trong mongodb thành công!", collectionName);
-        }
 
         //Insert sample data
         if(roleRepository.count() == 0) {

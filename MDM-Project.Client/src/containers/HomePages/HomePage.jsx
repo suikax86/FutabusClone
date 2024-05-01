@@ -52,22 +52,24 @@ const HomePage = () => {
         setDiemDen(temp);
       }
 
-      // const handleDiemDiChange = (event) => {
-      //     const newValue = event.target.value;
-      //     console.log(DiemDi);
-      //     setDiemDi(newValue);
-      // };
-  
+
+    const handleDiemDiChange = (item) => {
+        setDiemDi(item);
+        setDSDiemDen(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng'].filter(city => city !== item));
+    };
+    const handleDiemDenChange = (item) => {
+        setDiemDen(item);
+        setDSDiemDi(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng','Khánh Hoà'].filter(city => city !== item));
+    };
       // const handleDiemDenChange = (event) => {
       //     const newValue = event.target.value;
       //     setDiemDen(newValue);
       // };
 
     //TODO: tạo hàm gọi API trả về 
-    const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
-    const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
-  
-      const [LoaiVe, setLoaiVe] = useState('MotChieu');
+    const [DSDiemDi, setDSDiemDi] = useState(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng']);
+    const [DSDiemDen, setDSDiemDen] = useState(['Đà Lạt','Khánh Hoà', 'Thành phố Hồ Chí Minh', 'Đà Nẵng']);
+    const [LoaiVe, setLoaiVe] = useState('MotChieu');
     return (
         <React.Fragment>
             <Header />
@@ -116,14 +118,16 @@ const HomePage = () => {
                                         {DiemDi}
                                     </div>
 
-                                    <ul class="dropdown-menu">
+                                    <ul className="dropdown-menu">
                                         {DSDiemDi.map(item => (
-                                            <li><a class="dropdown-item" onClick={() => {setDiemDi(item)}}>{item}</a></li>
+                                            <li><a className="dropdown-item"
+                                                   onClick={() => handleDiemDiChange(item)}>{item}</a></li>
                                         ))}
                                     </ul>
                                 </div>
 
-                                <img class="col-1" src={'https://futabus.vn/images/icons/switch_location.svg'} onClick={swapDiaDiem}/>
+                                <img class="col-1" src={'https://futabus.vn/images/icons/switch_location.svg'}
+                                     onClick={swapDiaDiem}/>
 
                                 <div class="dropdown col-3">
 
@@ -142,7 +146,7 @@ const HomePage = () => {
 
                                     <ul class="dropdown-menu">
                                         {DSDiemDen.map(item => (
-                                        <li><a class="dropdown-item" onClick={() => {setDiemDen(item)}}>{item}</a></li>
+                                        <li><a class="dropdown-item" onClick={() => {handleDiemDenChange(item)}}>{item}</a></li>
                                         ))}
                                     </ul>
                                 </div>

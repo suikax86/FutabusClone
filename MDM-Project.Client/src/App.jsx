@@ -11,6 +11,7 @@ import Register from './containers/Auth/Register/Register';
 import Information from './containers/User/Information/Information';
 import TicketHistory from './containers/User/TicketHistory/TicketHistory';
 import ResetPassword from './containers/User/ResetPassword/ResetPassword';
+import ManageBooking from "./containers/ManageBooking/ManageBooking.jsx";
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/lich-trinh" element={<Schedule />} />
+      <Route path="/dat-ve" element={<ManageBooking/>} />
       <Route path="/tra-cuu-ve" element={<LookupTickets />} />
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
