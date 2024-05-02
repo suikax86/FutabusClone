@@ -64,3 +64,121 @@ main {
         
     }
 }
+
+.overLay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    z-index: 200;
+}
+
+.invoice-layout {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 5rem;
+    display: flex;
+    z-index: 250;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    .invoice-window {
+        position: relative;
+        min-width: 1080px;
+        width: 100%;
+        height: 100%;
+        max-width: 42rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        .invoice-modal-content {
+            position: relative;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+            .invoice-modal-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 1.25rem;
+                border-bottom: 1px solid black;
+                border-top-left-radius: 0.25rem;
+                border-top-right-radius: 0.25rem;
+
+                h3 {
+                    font-size: 1.25rem;
+                    line-height: 1.75rem;
+                    font-weight: 600;
+                }
+
+                .btn-close-invoice-modal {
+                    display: inline-flex;
+                    align-items: center;
+                    color: #a0aec0;
+                    background-color: transparent;
+                    transition: background-color 0.3s ease;
+                    border-radius: 0.5rem;
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    padding: 0;
+                    margin-left: auto;
+
+                    svg {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                    }
+                }
+            }
+
+            .invoice-modal-body {
+                padding: 1.5rem;
+
+                .invoice-basic-info {
+                    border-bottom: 1px solid black;
+                }
+
+                .invoice-detail {
+                    padding-top: 1.5rem;
+                }
+
+                .form-group-invoice {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    width: 45%;
+
+                    .form-label-invoice {
+                        width: 35%;
+                    }
+
+                    input {
+                        line-height: 0 !important;
+                    }
+
+                    .form-control-invoice {
+                        border: none;
+                        border-radius: 0;
+                        box-shadow: none;
+                        background-color: transparent !important;
+                    }
+                }
+
+                .special-input {
+                    width: 100%;
+
+                    .form-label-invoice {
+                        width: 13%;
+                    }
+                }
+            }
+        }
+    }
+}
