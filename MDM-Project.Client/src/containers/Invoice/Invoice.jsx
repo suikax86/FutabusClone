@@ -123,7 +123,7 @@ const Invoice = () => {
                         <div className='invoice-modal-content'>
                             <div className='invoice-modal-header'>
                                 <h3>
-                                    Hóa đơn: HSJSDW
+                                    Hóa đơn: <span>{invoiceData.invoiceID}</span>
                                 </h3>
                                 <button type="button" className="btn-close-invoice-modal" 
                                         data-modal-toggle="edit-user-modal"

@@ -116,6 +116,10 @@ main {
                     font-size: 1.25rem;
                     line-height: 1.75rem;
                     font-weight: 600;
+
+                    span {
+                        color: rgb(63, 63, 240);
+                    }
                 }
 
                 .btn-close-invoice-modal {
