@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './HomePage.scss'
 import Header from '../HomePages/Header';
 import dropdown from '/img/caret-down.svg';
+import axios from 'axios';
 
 const HomePage = () => {
     const [item, setItem] = useState({ kindOfStand: "", another: "another" });
@@ -29,11 +30,7 @@ const HomePage = () => {
       const huongdan = () => {
           navigate('/huongdan');
       }
-  
-      const timchuyen = () => {
-          setDSChuyenXe(1);
-      }
-      
+
       const dienthongtin = () => {
         navigate('/thong-tin-ve')
       }
@@ -58,9 +55,52 @@ const HomePage = () => {
     
     const [DSChuyenXe, setDSChuyenXe] = useState(0);
 
-    const FilterGioDi = (FromH, ToH) => {
-        
+
+
+    const locationMapping = {
+        "TP Hồ Chí Minh": "Ho Chi Minh City",
+        "Khánh Hoà": "Khanh Hoa",
+        "Đà Lạt": "Da Lat",
+        "Đà Nẵng": "Da Nang"
+    };
+
+    const getBuses = async (departureLocation, arrivalLocation, departureTime) => {
+        try {
+
+            const response = await axios.get(`http://localhost:8080/api/buses/search`, {
+                params: {
+                    departureLocation: departureLocation,
+                    arrivalLocation: arrivalLocation,
+                    departureTime: departureTime
+                }
+            });
+            if (response.status === 200) {
+                setDSChuyenXe(response.data);
+                return response.data;
+            } else {
+                console.error("Error fetching buses");
+            }
+        } catch (error) {
+            console.error("Error during API request:", error);
+        }
     }
+
+    const getFormattedDate = (date) => {
+        let year = date.getFullYear();
+        let month = 1 + date.getMonth();
+        month = month >= 10 ? month : '0' + month;
+        let day = date.getDate();
+        day = day >= 10 ? day : '0' + day;
+        return year + '-' + month + '-' + day;
+    }
+
+    const timchuyen = () => {
+        // Call the getBuses function with the selected locations and date
+        console.log(locationMapping[DiemDi],locationMapping[DiemDen],getFormattedDate(startDate));
+        getBuses(locationMapping[DiemDi], locationMapping[DiemDen],getFormattedDate(startDate));
+
+    }
+
     return (
         <React.Fragment>
             <Header />
@@ -210,28 +250,28 @@ const HomePage = () => {
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi1" />
                                     <label class="form-check-label" for="FilterGioDi1">
-                                        Sáng sớm 00:00 - 06:00 (0)
+                                        Sáng sớm 00:00 - 06:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi2"/>
                                     <label class="form-check-label" for="FilterGioDi2">
-                                        Buổi sáng 06:00 - 12:00 (0)
+                                        Buổi sáng 06:00 - 12:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi3"/>
                                     <label class="form-check-label" for="FilterGioDi3">
-                                        Buổi chiều 12:00 - 18:00 (21)
+                                        Buổi chiều 12:00 - 18:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="FilterGioDi4"/>
                                     <label class="form-check-label" for="FilterGioDi4">
-                                        Buổi tối 18:00 - 24:00 (38)
+                                        Buổi tối 18:00 - 24:00
                                     </label>
                                 </div>
                             </div>
@@ -264,99 +304,84 @@ const HomePage = () => {
 
                             </div>
                         </div>
-                        
-                        <div class="col">
-                            <div class="FastFilter row">
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter1" />
-                                <label class="icon col-2 row form-check-label" for="FastFilter1">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
-                                    <div class="col">
-                                        Giá rẻ bất ngờ
+
+                        <div className="col">
+                            <div className="FastFilter row">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter1"/>
+                                <label className="icon col-2 row form-check-label" htmlFor="FastFilter1">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá tăng dần
                                     </div>
                                 </label>
 
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter2" />
-                                <label class="icon row form-check-label" for="FastFilter2">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
-                                    <div class="col">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter2"/>
+                                <label className="icon col-2 row form-check-label" htmlFor="FastFilter2">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div className="col">
+                                        Giá giảm dần
+                                    </div>
+                                </label>
+
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter3"/>
+                                <label className="icon row form-check-label" htmlFor="FastFilter3">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
+                                    <div className="col">
                                         Giờ khởi hành
                                     </div>
                                 </label>
 
-                                <input class="form-check-input" type="checkbox" value="" id="FastFilter3" />
-                                <label class="icon row col-2 form-check-label" for="FastFilter3">
-                                    <img class='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
-                                    <div class="col">
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter4"/>
+                                <label className="icon row col-2 form-check-label" htmlFor="FastFilter4">
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
+                                    <div className="col">
                                         Ghế trống
                                     </div>
                                 </label>
-
                             </div>
 
-                            <div class="DanhSach">
+                            <div className="DanhSach">
+                                {DSChuyenXe.map((bus, index) => {
+                                    // Chuyển đổi departureTime và arrivalTime thành đối tượng Date
+                                    const departureDateTime = new Date(bus.departureTime);
+                                    const arrivalDateTime = new Date(bus.arrivalTime);
 
-                                <div class="ChuyenXe row" onClick={dienthongtin}>
-                                    <div class="TGDi col-1">
-                                        <h1> 16:30 </h1>
-                                        <p> Bến xe Rạch Sỏi</p>
-                                    </div>
+                                    // Trích xuất giờ từ departureTime và arrivalTime
+                                    const departureHour = ("0" + departureDateTime.getHours()).slice(-2) + ":" + ("0" + departureDateTime.getMinutes()).slice(-2);
+                                    const arrivalHour = ("0" + arrivalDateTime.getHours()).slice(-2) + ":" + ("0" + arrivalDateTime.getMinutes()).slice(-2);
 
-                                    <div class="DiChuyen col-1">
-                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
-                                        <p>----------</p>
-                                        <p>4 giờ</p>
-                                        <p>----------</p>
-                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
-                                    </div>
-
-                                    <div class="TGDi col-1">
-                                        <h1> 19:30 </h1>
-                                        <p> Bến xe Miền Tây</p>
-                                    </div>
-
-                                    <div class="col-1">
-                                        Limosine
-                                    </div>
-
-                                    <div class="col-1">
-                                        16 chỗ trống <br />
-                                        <p class="Gia">190.000đ</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="ChuyenXe row" onClick={dienthongtin}>
-                                    <div class="TGDi col-1">
-                                        <h1> 16:30 </h1>
-                                        <p> Bến xe Rạch Sỏi</p>
-                                    </div>
-
-                                    <div class="DiChuyen col-1">
-                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
-                                        <p>----------</p>
-                                        <p>4 giờ</p>
-                                        <p>----------</p>
-                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
-                                    </div>
-
-                                    <div class="TGDi col-1">
-                                        <h1> 19:30 </h1>
-                                        <p> Bến xe Miền Tây</p>
-                                    </div>
-
-                                    <div class="col-1">
-                                        Limosine
-                                    </div>
-
-                                    <div class="col-1">
-                                        16 chỗ trống <br />
-                                        <p class="Gia">190.000đ</p>
-                                    </div>
-                                </div>
+                                    const timeDifference = (arrivalDateTime - departureDateTime) / 3600000; // chuyển đổi sang giờ
 
 
-                                
-                                
+                                    return (
+                                        <div key={index} className="ChuyenXe row" onClick={dienthongtin}>
+                                            <div className="TGDi col-1">
+                                                <h1>{departureHour}</h1>
+                                                <p>{bus.boardingPoints[0]}</p>
+                                            </div>
+                                            <div className="DiChuyen col-1">
+                                                <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
+                                                <p>----------</p>
+                                                <p>{timeDifference} giờ </p>
+                                                <p>----------</p>
+                                                <img src={'https://futabus.vn/images/icons/station.svg'}/>
+                                            </div>
+                                            <div className="TGDi col-1">
+                                                <h1>{arrivalHour}</h1>
+                                                <p>{bus.droppingPoints[0]}</p>
+                                            </div>
+                                            <div className="col-1">
+                                                {bus.busType}
+                                            </div>
+                                            <div className="col-1">
+                                                Còn chỗ <br/>
+                                                <p className="Gia">{bus.fare}đ</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
+
                         </div>
                     </div>
                     )}
