@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { Form, Button } from "react-bootstrap";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import './HomePage.scss';
+import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import './HomePage.scss'
+import Header from '../HomePages/Header';
 
-import swap from '/img/two-opposite-arrows.svg' ;
 import dropdown from '/img/caret-down.svg';
 
-import Header from "./Header";
-
 const HomePage = () => {
-
     const [item, setItem] = useState({ kindOfStand: "", another: "another" });
     const { kindOfStand } = item;
 
@@ -39,9 +31,12 @@ const HomePage = () => {
       }
   
       const timchuyen = () => {
-          navigate('/dat-ve')
+          setDSChuyenXe(1);
       }
-  
+      
+      const dienthongtin = () => {
+        navigate('/thong-tin-ve')
+      }
       const [DiemDi, setDiemDi] = useState('');
       const [DiemDen, setDiemDen] = useState('');
       const [SoVe, setSoVe] = useState(1);
@@ -52,24 +47,31 @@ const HomePage = () => {
         setDiemDen(temp);
       }
 
-
-    const handleDiemDiChange = (item) => {
-        setDiemDi(item);
-        setDSDiemDen(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng'].filter(city => city !== item));
-    };
-    const handleDiemDenChange = (item) => {
-        setDiemDen(item);
-        setDSDiemDi(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng','Khánh Hoà'].filter(city => city !== item));
-    };
+      // const handleDiemDiChange = (event) => {
+      //     const newValue = event.target.value;
+      //     console.log(DiemDi);
+      //     setDiemDi(newValue);
+      // };
+  
       // const handleDiemDenChange = (event) => {
       //     const newValue = event.target.value;
       //     setDiemDen(newValue);
       // };
 
     //TODO: tạo hàm gọi API trả về 
-    const [DSDiemDi, setDSDiemDi] = useState(['Thành phố Hồ Chí Minh','Đà Lạt', 'Đà Nẵng']);
-    const [DSDiemDen, setDSDiemDen] = useState(['Đà Lạt','Khánh Hoà', 'Thành phố Hồ Chí Minh', 'Đà Nẵng']);
+    const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
+    const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
+
     const [LoaiVe, setLoaiVe] = useState('MotChieu');
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [returnDate, setReturnDate] = useState(new Date());
+    
+    const [DSChuyenXe, setDSChuyenXe] = useState(0);
+
+    const FilterGioDi = (FromH, ToH) => {
+        
+    }
     return (
         <React.Fragment>
             <Header />
@@ -118,16 +120,16 @@ const HomePage = () => {
                                         {DiemDi}
                                     </div>
 
-                                    <ul className="dropdown-menu">
+                                    <ul class="dropdown-menu">
                                         {DSDiemDi.map(item => (
-                                            <li><a className="dropdown-item"
-                                                   onClick={() => handleDiemDiChange(item)}>{item}</a></li>
+                                            item != DiemDen ?(
+                                                <li><a class="dropdown-item" onClick={() => {setDiemDi(item)}}>{item}</a></li>
+                                            ) : (<></>)
                                         ))}
                                     </ul>
                                 </div>
 
-                                <img class="col-1" src={'https://futabus.vn/images/icons/switch_location.svg'}
-                                     onClick={swapDiaDiem}/>
+                                <img class="col-1" src={'https://futabus.vn/images/icons/switch_location.svg'} onClick={swapDiaDiem}/>
 
                                 <div class="dropdown col-3">
 
@@ -146,7 +148,9 @@ const HomePage = () => {
 
                                     <ul class="dropdown-menu">
                                         {DSDiemDen.map(item => (
-                                        <li><a class="dropdown-item" onClick={() => {handleDiemDenChange(item)}}>{item}</a></li>
+                                        item != DiemDi ?(
+                                            <li><a class="dropdown-item" onClick={() => {setDiemDen(item)}}>{item}</a></li>
+                                            ) : (<></>)
                                         ))}
                                     </ul>
                                 </div>
@@ -154,9 +158,7 @@ const HomePage = () => {
                                     <>
                                         <div class="col-3">
                                             <p>Ngày đi</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={startDate} onChange={(date) => setStartDate(date)} />
 
                                         </div>
 
@@ -182,17 +184,13 @@ const HomePage = () => {
                                     <>
                                         <div class="dropdown col-2">
                                             <p>Ngày đi</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={startDate} onChange={(date) => setStartDate(date)} />
 
                                         </div>
 
                                         <div class="dropdown col-2">
                                             <p>Ngày về</p>
-                                            <input class="NgayDi" 
-                                                type="date" 
-                                            />
+                                            <DatePicker className='NgayDi'selected={returnDate} onChange={(date) => setReturnDate(date)} />
                                         </div>
 
                                         <div class="dropdown col-1">
@@ -225,10 +223,173 @@ const HomePage = () => {
                         </form>
 
                     </div>
+                    {DSChuyenXe == 0 ? (
+                        <></>
+                    ) :(
+                    <div class="DSContainer row">
+                        <div class="Filter col-3">
+                            <h2>Bộ lọc tìm kiếm</h2>
+                            <div>
+                                <h3>Giờ đi</h3>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi1" />
+                                    <label class="form-check-label" for="FilterGioDi1">
+                                        Sáng sớm 00:00 - 06:00 (0)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi2"/>
+                                    <label class="form-check-label" for="FilterGioDi2">
+                                        Buổi sáng 06:00 - 12:00 (0)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi3"/>
+                                    <label class="form-check-label" for="FilterGioDi3">
+                                        Buổi chiều 12:00 - 18:00 (21)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi4"/>
+                                    <label class="form-check-label" for="FilterGioDi4">
+                                        Buổi tối 18:00 - 24:00 (38)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <div class='row'>
+                                <h3>Loại xe</h3>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe1" />
+                                    <label class="form-check-label" for="FilterLoaiXe1">
+                                        Ghế
+                                    </label>
+                                </div>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe2"/>
+                                    <label class="form-check-label" for="FilterLoaiXe2">
+                                        Giường
+                                    </label>
+                                </div>
+
+                                <div class="col-2 form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe3"/>
+                                    <label class="form-check-label" for="FilterLoaiXe3">
+                                        Limousine
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                        <div class="col">
+                            <div class="FastFilter row">
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter1" />
+                                <label class="icon col-2 row form-check-label" for="FastFilter1">
+                                    <img class='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
+                                    <div class="col">
+                                        Giá rẻ bất ngờ
+                                    </div>
+                                </label>
+
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter2" />
+                                <label class="icon row form-check-label" for="FastFilter2">
+                                    <img class='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
+                                    <div class="col">
+                                        Giờ khởi hành
+                                    </div>
+                                </label>
+
+                                <input class="form-check-input" type="checkbox" value="" id="FastFilter3" />
+                                <label class="icon row col-2 form-check-label" for="FastFilter3">
+                                    <img class='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
+                                    <div class="col">
+                                        Ghế trống
+                                    </div>
+                                </label>
+
+                            </div>
+
+                            <div class="DanhSach">
+
+                                <div class="ChuyenXe row" onClick={dienthongtin}>
+                                    <div class="TGDi col-1">
+                                        <h1> 16:30 </h1>
+                                        <p> Bến xe Rạch Sỏi</p>
+                                    </div>
+
+                                    <div class="DiChuyen col-1">
+                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
+                                        <p>----------</p>
+                                        <p>4 giờ</p>
+                                        <p>----------</p>
+                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
+                                    </div>
+
+                                    <div class="TGDi col-1">
+                                        <h1> 19:30 </h1>
+                                        <p> Bến xe Miền Tây</p>
+                                    </div>
+
+                                    <div class="col-1">
+                                        Limosine
+                                    </div>
+
+                                    <div class="col-1">
+                                        16 chỗ trống <br />
+                                        <p class="Gia">190.000đ</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="ChuyenXe row" onClick={dienthongtin}>
+                                    <div class="TGDi col-1">
+                                        <h1> 16:30 </h1>
+                                        <p> Bến xe Rạch Sỏi</p>
+                                    </div>
+
+                                    <div class="DiChuyen col-1">
+                                        <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
+                                        <p>----------</p>
+                                        <p>4 giờ</p>
+                                        <p>----------</p>
+                                        <img src={'https://futabus.vn/images/icons/station.svg'}/>
+                                    </div>
+
+                                    <div class="TGDi col-1">
+                                        <h1> 19:30 </h1>
+                                        <p> Bến xe Miền Tây</p>
+                                    </div>
+
+                                    <div class="col-1">
+                                        Limosine
+                                    </div>
+
+                                    <div class="col-1">
+                                        16 chỗ trống <br />
+                                        <p class="Gia">190.000đ</p>
+                                    </div>
+                                </div>
+
+
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    )}
                 </section>
             </main>
         </React.Fragment>
     )
 }
+
 
 export default HomePage
