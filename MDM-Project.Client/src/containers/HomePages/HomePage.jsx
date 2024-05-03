@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './HomePage.scss'
 import Header from '../HomePages/Header';
-
 import dropdown from '/img/caret-down.svg';
 
 const HomePage = () => {
@@ -47,20 +47,9 @@ const HomePage = () => {
         setDiemDen(temp);
       }
 
-      // const handleDiemDiChange = (event) => {
-      //     const newValue = event.target.value;
-      //     console.log(DiemDi);
-      //     setDiemDi(newValue);
-      // };
-  
-      // const handleDiemDenChange = (event) => {
-      //     const newValue = event.target.value;
-      //     setDiemDen(newValue);
-      // };
 
-    //TODO: tạo hàm gọi API trả về 
-    const [DSDiemDi, setDSDiemDi] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
-    const [DSDiemDen, setDSDiemDen] = useState(['Kiên Giang','Hồ Chí Minh','Đồng Nai','Long An','Tây Ninh','Cà Mau']);
+    const [DSDiemDi, setDSDiemDi] = useState(['TP Hồ Chí Minh','Đà Lạt','Đà Nẵng']);
+    const [DSDiemDen, setDSDiemDen] = useState(['TP Hồ Chí Minh','Khánh Hoà','Đà Lạt','Đà Nẵng']);
 
     const [LoaiVe, setLoaiVe] = useState('MotChieu');
 
@@ -108,13 +97,6 @@ const HomePage = () => {
                             <div className="DiaDiem row">
                                 <div class="dropdown col-3">
                                     <p>Điểm đi</p>
-                                    {/* <input class="DiaDiem-btn dropdown-toggle" 
-                                        type="text" 
-                                        data-bs-toggle="dropdown"
-                                        defaultValue={DiemDi} 
-                                        onChange={handleDiemDiChange}
-
-                                    /> */}
 
                                     <div class="DiaDiem-btn" data-bs-toggle="dropdown">
                                         {DiemDi}
@@ -134,13 +116,6 @@ const HomePage = () => {
                                 <div class="dropdown col-3">
 
                                     <p>Điểm đến</p>
-                                    {/* <input class="DiaDiem-btn dropdown-toggle" 
-                                        type="text" 
-                                        data-bs-toggle="dropdown" 
-                                        defaultValue={DiemDen}
-                                        onChange={handleDiemDenChange}
-
-                                    /> */}
 
                                     <div class="DiaDiem-btn" data-bs-toggle="dropdown">
                                         {DiemDen}
