@@ -51,11 +51,8 @@ const Information = () => {
                 alert(message);
             }
         } catch (error) {
-            if (axios.isAxiosError(error)) {
-                alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
-                setErrorMessage(error.response.data);
-                console.error('Axios error:', error.response );
-            } 
+            const message = error.response?.data?.message || 'An error occurred while update';
+            alert(message)
         }
     };
 

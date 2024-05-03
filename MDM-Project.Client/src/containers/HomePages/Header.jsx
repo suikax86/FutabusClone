@@ -1,5 +1,6 @@
 ﻿import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, Navigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../services/auth';
 import axios from 'axios';
 
@@ -8,6 +9,7 @@ import './Header.scss';
 const Header = () => {
 
     const { isLoggedIn, login, logout } = useAuth();
+    const navigate = useNavigate();
     const customerId = localStorage.getItem('customerId');
     const [userName, setUserName] = useState('');
     
@@ -35,6 +37,13 @@ const Header = () => {
             fetchData();
         }
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('customerId');
+        navigate('/');
+        logout();
+    }
 
 
     return (
@@ -75,7 +84,7 @@ const Header = () => {
                                     <li>
                                         <div className='menu-account-child-content'>
                                             <img src='https://futabus.vn/images/header/profile/Logout.svg'/>
-                                            <span className='ms-2'>Đăng xuất</span>
+                                            <span className='ms-2' onClick={handleLogout}>Đăng xuất</span>
                                         </div>
                                     </li>
                                 </ul>
