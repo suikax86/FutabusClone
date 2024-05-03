@@ -64,14 +64,18 @@ const HomePage = () => {
         "Đà Nẵng": "Da Nang"
     };
 
-    const getBuses = async (departureLocation, arrivalLocation, departureTime) => {
+    const getBuses = async (departureLocation, arrivalLocation, departureTime, sortByFare=null, sortByDepartureTime=null, busType=null, timeType=null) => {
         try {
 
             const response = await axios.get(`http://localhost:8080/api/buses/search`, {
                 params: {
                     departureLocation: departureLocation,
                     arrivalLocation: arrivalLocation,
-                    departureTime: departureTime
+                    departureTime: departureTime,
+                    sortByFare: sortByFare,
+                    sortByDepartureTime: sortByDepartureTime,
+                    busType: busType,
+                    timeType: timeType
                 }
             });
             if (response.status === 200) {
@@ -92,6 +96,47 @@ const HomePage = () => {
         let day = date.getDate();
         day = day >= 10 ? day : '0' + day;
         return year + '-' + month + '-' + day;
+    }
+
+    const handleSortByFareAscending = () => {
+        getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate), 'ASCENDING');
+    }
+
+    const handleSortByFareDescending = () => {
+        getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate), 'DESCENDING');
+    }
+
+    const handleSortByDepartureTimeAscending = () => {
+        getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, 'ASCENDING');
+    }
+
+    const handleSortByDepartureTimeDescending = () => {
+        getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, 'DESCENDING');
+    }
+
+    const [busType, setBusType] = useState('');
+
+    const handleFilterByBusType = () => {
+        if(busType == 'GHẾ') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, 'GHẾ');
+        } else if(busType == 'GIƯỜNG') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, 'GIƯỜNG');
+        } else if(busType == 'LIMOUSINE') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, 'LIMOUSINE');
+        }
+    }
+
+    const [timeType, setTimeType] = useState('');
+    const handleFilterByTimeType = () => {
+        if(timeType == 'EARLY_MORNING') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, null, 'EARLY_MORNING');
+        } else if(timeType == 'MORNING') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, null, 'MORNING');
+        } else if(timeType == 'AFTERNOON') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, null, 'AFTERNOON');
+        } else if(timeType == 'NIGHT') {
+            getBuses(locationMapping[DiemDi], locationMapping[DiemDen], getFormattedDate(startDate),null, null, null, 'NIGHT');
+        }
     }
 
     const timchuyen = () => {
@@ -248,28 +293,28 @@ const HomePage = () => {
                                 <h3>Giờ đi</h3>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi1" />
+                                    <input class="form-check-input" type="checkbox" value="EARLY_MORNING" id="FilterGioDi1" onChange={(e) => {setTimeType(e.target.value); handleFilterByTimeType();}} />
                                     <label class="form-check-label" for="FilterGioDi1">
                                         Sáng sớm 00:00 - 06:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi2"/>
+                                    <input class="form-check-input" type="checkbox" value="MORNING" id="FilterGioDi2" onChange={(e) => {setTimeType(e.target.value); handleFilterByTimeType();}}/>
                                     <label class="form-check-label" for="FilterGioDi2">
                                         Buổi sáng 06:00 - 12:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi3"/>
+                                    <input class="form-check-input" type="checkbox" value="AFTERNOON" id="FilterGioDi3" onChange={(e) => {setTimeType(e.target.value); handleFilterByTimeType();}}/>
                                     <label class="form-check-label" for="FilterGioDi3">
                                         Buổi chiều 12:00 - 18:00
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterGioDi4"/>
+                                    <input class="form-check-input" type="checkbox" value="NIGHT" id="FilterGioDi4" onChange={(e) => {setTimeType(e.target.value); handleFilterByTimeType();}}/>
                                     <label class="form-check-label" for="FilterGioDi4">
                                         Buổi tối 18:00 - 24:00
                                     </label>
@@ -282,21 +327,21 @@ const HomePage = () => {
                                 <h3>Loại xe</h3>
 
                                 <div class="col-2 form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe1" />
+                                    <input class="form-check-input" type="checkbox" value="GHẾ" id="FilterLoaiXe1" onChange={(e) => {setBusType(e.target.value); handleFilterByBusType();}}/>
                                     <label class="form-check-label" for="FilterLoaiXe1">
                                         Ghế
                                     </label>
                                 </div>
 
                                 <div class="col-2 form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe2"/>
+                                    <input class="form-check-input" type="checkbox" value="GIƯỜNG" id="FilterLoaiXe2" onChange={(e) => {setBusType(e.target.value); handleFilterByBusType();}}/>
                                     <label class="form-check-label" for="FilterLoaiXe2">
                                         Giường
                                     </label>
                                 </div>
 
                                 <div class="col-2 form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="FilterLoaiXe3"/>
+                                    <input class="form-check-input" type="checkbox" value="LIMOUSINE" id="FilterLoaiXe3" onChange={(e) => {setBusType(e.target.value); handleFilterByBusType();}}/>
                                     <label class="form-check-label" for="FilterLoaiXe3">
                                         Limousine
                                     </label>
@@ -307,7 +352,7 @@ const HomePage = () => {
 
                         <div className="col">
                             <div className="FastFilter row">
-                                <input className="form-check-input" type="checkbox" value="" id="FastFilter1"/>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter1" onClick={handleSortByFareAscending}/>
                                 <label className="icon col-2 row form-check-label" htmlFor="FastFilter1">
                                     <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
                                     <div className="col">
@@ -315,7 +360,7 @@ const HomePage = () => {
                                     </div>
                                 </label>
 
-                                <input className="form-check-input" type="checkbox" value="" id="FastFilter2"/>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter2" onClick={handleSortByFareDescending}/>
                                 <label className="icon col-2 row form-check-label" htmlFor="FastFilter2">
                                     <img className='col-2' src={'https://futabus.vn/images/icons/save_money.svg'}/>
                                     <div className="col">
@@ -323,19 +368,19 @@ const HomePage = () => {
                                     </div>
                                 </label>
 
-                                <input className="form-check-input" type="checkbox" value="" id="FastFilter3"/>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter3" onClick={handleSortByDepartureTimeAscending}/>
                                 <label className="icon row form-check-label" htmlFor="FastFilter3">
                                     <img className='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
                                     <div className="col">
-                                        Giờ khởi hành
+                                        Giờ sớm nhất
                                     </div>
                                 </label>
 
-                                <input className="form-check-input" type="checkbox" value="" id="FastFilter4"/>
+                                <input className="form-check-input" type="checkbox" value="" id="FastFilter4" onClick={handleSortByDepartureTimeDescending}/>
                                 <label className="icon row col-2 form-check-label" htmlFor="FastFilter4">
-                                    <img className='col-2' src={'https://futabus.vn/images/icons/seat.svg'}/>
+                                    <img className='col-2' src={'https://futabus.vn/images/icons/clock.svg'}/>
                                     <div className="col">
-                                        Ghế trống
+                                        Giờ muộn nhất
                                     </div>
                                 </label>
                             </div>
