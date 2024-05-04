@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import './Booking.scss';
 import '../HomePages/HomePage.scss'
 import Header from '../HomePages/Header';
+import axios from 'axios';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { format } from 'date-fns';
 
 import dropdown from '/img/caret-down.svg';
 
@@ -14,25 +20,69 @@ const Booking = () => {
 
     //const [item, setItem] = useState({ kindOfStand: "", another: "another" });
     
-    const[gheTangTren,setGheTangTren] = useState(Array.from({ length: 6 }, () => Array(3).fill('')));
-    const[gheTangDuoi,setGheTangDuoi] = useState(Array.from({ length: 6 }, () => Array(3).fill('')));
+    const {id} = useParams();
+
+    const[ghe,setGhe] = useState({'seats': []});
+
+    useEffect(() => {
+        const fetch = async() => {
+            try{
+                const response = await axios.get(`http://localhost:8080/api/buses/${id}`);
+                setGhe(response.data);
+                if (response.status === 200) {
+                    setGhe(response.data);
+                    setDSDiemDon(response.data["boardingPoints"])
+                    setDSDiemTra(response.data["droppingPoints"])
+                    return response.data;
+                }
+            }
+            catch(error) {
+                console.error("Error:", error);
+            }
+        };
+        fetch();
+    },[])
+
+    const [selectGhe, setSelectGhe] = useState([]);
+
+    const chonGhe = (e, id) => {
+        console.log(selectGhe);
+        if (e.target.checked === true) {
+            if (selectGhe.length >= 5) {
+                e.target.checked = false;
+                return;
+            }
+            const temp = [...selectGhe, id];
+            setSelectGhe(temp);
+        } else {
+            const temp = selectGhe.filter(item => item !== id);
+            setSelectGhe(temp);
+        }
+    }
+
+    const doiNgay = (date="1/1/1970") => {
+        console.log(date);
+        const dateTime = new Date(date);
+        console.log(dateTime);
+        const formattedDateTime = format(dateTime, 'HH:mm:ss dd/MM/yy')
+        return formattedDateTime;
+    }
+
+    const huy = () => {
+        navigate("/");
+    }
+
+    const thanhtoan = () =>{
+        navigate();
+    }
 
     const[DiemDon, setDiemDon] = useState("");
     const[DiemTra, setDiemTra] = useState("");
 
-    const[DSDiemDon,setDSDiemDon] = useState(['A','B','C']);
-    const[DSDiemTra,setDSDiemTra] = useState(['X','Y','Z']);
+    const[DSDiemDon,setDSDiemDon] = useState([]);
+    const[DSDiemTra,setDSDiemTra] = useState([]);
 
     const navigate = useNavigate();
-
-    const huongdan = () => {
-        navigate('/huongdan');
-    }
-
-    const timchuyen = () => {
-        navigate('/dat-ve')
-    }
-  
 
     return (
         <React.Fragment>
@@ -50,69 +100,40 @@ const Booking = () => {
                                 </h3>
                                 
                                 <div class="col" align="center">
-                                    <h4>
-                                        Tầng dưới
-                                    </h4>
-                                    {gheTangDuoi.map( (item, index) => (
-                                        <>
-                                        <div class="row">
-                                            <div class="col ghe">
-                                                <img src={ACTIVATE_SEAT} />
-                                                <h5>
-                                                    {index * 3 + 1 >= 10 ? 'A' : 'A0'}{index * 3 + 1} 
-                                                </h5>
-                                            </div>
-
-                                            <div class="col ghe">
-                                                <img src={DISABLED_SEAT} />  
-                                                <h5>
-                                                    {index * 3 + 2 >= 10 ? 'A' : 'A0'}{index * 3 + 2} 
-                                                </h5>
-                                            </div>
-
-                                            <div class="col ghe">
-                                                <img src={SELECTED_SEAT} />
-                                                <h5>
-                                                    {index * 3 + 3 >= 10 ? 'A' : 'A0'}{index * 3 + 3} 
-                                                </h5>
-                                            </div>                                  
-                                        </div>
-                                        </>
-                                    ))}
+                                    <div class="row">
                                     
+                                    {ghe['seats'].map((item,index) => {
+                                        return(
+                                            <div class="col-4 ghe">
+                                                {item['isBooked'] == true ? (
+                                                    <>
+                                                        <div class="ghe-disabled"></div> 
+                                                        <h5 class="disabled">
+                                                            {item['seatNumber']}
+                                                        </h5>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <input className="form-check-input" type="checkbox" id={item['seatNumber']} onClick={(e) => chonGhe(e, item['seatNumber'])}/>
+                                                        <label className="form-check-label" htmlFor={item['seatNumber']} >
+                                                            <div class="ghe-img"></div> 
+                                                            <h5 class="ghe-h5">
+                                                                {item['seatNumber']}
+                                                            </h5>
+                                                        </label>
+                                                            
+                                                    </>
+                                                    
+                                                )}
+                                                
+                                            </div>
+                                        )
+                                    })}
+
+                                    </div>
                                 </div>
 
-                                <div class="col" align="center">
-                                    <h4>
-                                        Tầng trên
-                                    </h4>
-                                    {gheTangTren.map( (item, index) => (
-                                        <>
-                                        <div class="row">
-                                            <div class="col ghe">
-                                                <img src={ACTIVATE_SEAT} />
-                                                <h5>
-                                                    {index * 3 + 1 >= 10 ? 'A' : 'A0'}{index * 3 + 1} 
-                                                </h5>
-                                            </div>
-
-                                            <div class="col ghe">
-                                                <img src={DISABLED_SEAT} />  
-                                                <h5>
-                                                    {index * 3 + 2 >= 10 ? 'A' : 'A0'}{index * 3 + 2} 
-                                                </h5>
-                                            </div>
-
-                                            <div class="col ghe">
-                                                <img src={SELECTED_SEAT} />
-                                                <h5>
-                                                    {index * 3 + 3 >= 10 ? 'A' : 'A0'}{index * 3 + 3} 
-                                                </h5>
-                                            </div>                              
-                                        </div>
-                                        </>
-                                    ))}
-                                </div>
+                                
 
                                 <div class="col-4 color-detail">
                                     <div class="gray"></div> 
@@ -192,6 +213,21 @@ const Booking = () => {
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="thanh-toan row">
+                                <h3>Thanh toán</h3>
+                                <div class="col-6">
+                                    {ghe["fare"] * selectGhe.length}đ
+                                </div>
+
+                                <div class="col" align="right">
+                                    <button type="button" class="btn btn-huy" onClick={huy}>Hủy</button>
+                                </div>
+
+                                <div class="col" align="right">
+                                    <button type="button" class="btn btn-thanhtoan" onClick={thanhtoan}>Thanh toán</button>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -208,11 +244,16 @@ const Booking = () => {
                                     </div>
 
                                     <div class="col info" align="right">
-                                        Sài Gòn ⇒ Rạch Giá <br />
-                                        01:15 03-05-2024 <br />
-                                        0 Ghế <br />
+                                        {ghe["departureLocation"]} ⇒ {ghe["arrivalLocation"]} <br />
+                                        {doiNgay(ghe["departureTime"])} <br />
+                                        {selectGhe.length} Ghế <br />
+                                        {selectGhe.map((item) => {
+                                            return (
+                                                <span key={item}>{item} </span>
+                                            );
+                                        })}
                                         <br />
-                                        0đ
+                                        {ghe["fare"] * selectGhe.length}đ
                                     </div>
                                 </div>
                             </div>
@@ -229,10 +270,10 @@ const Booking = () => {
                                     </div>
 
                                     <div class="col info" align="right">
-                                        0đ <br />
+                                        {ghe["fare"] * selectGhe.length}đ <br />
                                         0đ <br  /> 
                                         <br  /> 
-                                        <b id="tong-tien"> 0đ </b>
+                                        <b id="tong-tien">  {ghe["fare"] * selectGhe.length}đ </b>
                                     </div>
                                 </div>
                             </div>

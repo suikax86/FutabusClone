@@ -31,15 +31,50 @@
 
             .ghe{
                 position: relative;
-                img{
-                    margin: 10px 0;
-                }
+                margin-bottom: 10px;
+
                 h5{
                     display: inline-block;
                     position: absolute;
-                    top: 35%;
-                    left: 37%;
+                    top: 28%;
+                    left: 42%;
                     font-size: 10px;
+                    font-weight: bold;
+                }
+                .ghe-disabled{
+                    height: 40px;
+                    width: 40px;
+                    background-image: url('https://futabus.vn/images/icons/seat_disabled.svg');
+                    background-size: cover;
+                }
+
+                .disabled{
+                    color: #a4afb8;
+                }
+                input{
+                    display: none;
+                }
+                .form-check-label{
+                    cursor: pointer;
+
+                    .ghe-img{
+                        height: 40px;
+                        width: 40px;
+                        background-image: url('https://futabus.vn/images/icons/seat_active.svg');
+                        background-size: cover;
+                    }
+                    .ghe-h5{
+                        color: #339bf5;
+                    }
+                }
+                
+                .form-check-input:checked + .form-check-label{
+                    .ghe-img{
+                        background-image: url('https://futabus.vn/images/icons/seat_selecting.svg');
+                    }
+                    .ghe-h5{
+                        color: #ef5968;
+                    }
                 }
             }
             
@@ -162,8 +197,30 @@
             }
         }
 
+        .thanh-toan{
+            box-shadow: 1px 1px 3px #c2c2c2;
+            padding: 20px;
+            border-radius: 12.5px;
+            margin: 10px 0;
+
+            .col-6{
+                font-size: 20px;
+                justify-content: center;
+                font-weight: bold;
+            }
+
+            .btn-thanhtoan{
+                background-color: #ff831e;
+                color: #fff;
+            }
+
+            .btn-huy{
+                border: solid 1px #c3c3c3;
+                color: #ff831e;
+            }
+        }
         .col-7{
-            margin-right: 50px;
+            margin-right: 10px;
         }
 
         .thong-tin-luot-di{

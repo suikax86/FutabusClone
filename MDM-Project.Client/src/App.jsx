@@ -18,7 +18,7 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/lich-trinh" element={<Schedule />} />
-      <Route path="/thong-tin-ve" element={<Booking />} />
+      <Route path="/thong-tin-ve/:id" element={<Booking />} />
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
