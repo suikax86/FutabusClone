@@ -1,6 +1,6 @@
 package org.example.mdmprojectserver.repository;
 
-import org.example.mdmprojectserver.model.Customer;
+import org.example.mdmprojectserver.model.Mongodb.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

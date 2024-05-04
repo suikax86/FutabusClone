@@ -1,6 +1,6 @@
 package org.example.mdmprojectserver.repository;
 
-import org.example.mdmprojectserver.model.UserEntity;
+import org.example.mdmprojectserver.model.RDBMS.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

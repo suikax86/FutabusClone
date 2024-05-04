@@ -8,25 +8,30 @@ import org.example.mdmprojectserver.model.enums.SortType;
 import org.example.mdmprojectserver.model.enums.TimeType;
 import org.example.mdmprojectserver.repository.BusRepository;
 import org.example.mdmprojectserver.repository.SeatRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/buses")
-public class BusController {
+@RequestMapping("/api/redis")
+@EnableCaching
+public class RedisController {
     private final BusRepository busRepository;
     private final SeatRepository seatRepository;
-    public BusController(BusRepository busRepository, SeatRepository seatRepository) {
+
+    public RedisController(BusRepository busRepository, SeatRepository seatRepository) {
         this.busRepository = busRepository;
         this.seatRepository = seatRepository;
     }
@@ -36,16 +41,22 @@ public class BusController {
         return this.busRepository.findAll();
     }
 
+    @Cacheable(key = "#id",value = "Bus")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBus(@PathVariable String id) {
-        return ResponseEntity.ok(this.busRepository.findById(id));
+    public Bus getBus(@PathVariable String id) {
+        Bus bus = this.busRepository.findById(id).orElse(null);
+        if (bus == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus not found");
+        } else {
+            return bus;
+        }
     }
 
     @GetMapping("/search")
     public List<Bus> searchBuses(@RequestParam String departureLocation, @RequestParam String arrivalLocation,
                                  @RequestParam String departureTime,
                                  @RequestParam(required = false) SortType sortByFare, @RequestParam(required = false) SortType sortByDepartureTime,
-                                 @RequestParam(required = false) BusType busType, @RequestParam(required = false)TimeType timeType){
+                                 @RequestParam(required = false) BusType busType, @RequestParam(required = false) TimeType timeType){
         // Parse the departureTime to LocalDate
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate departureDate = LocalDate.parse(departureTime, formatter);
@@ -112,38 +123,12 @@ public class BusController {
         return ResponseEntity.ok(this.busRepository.save(bus));
     }
 
-    @PostMapping("/addBuses")
-    public ResponseEntity<?> newBuses(@RequestBody List<BusDto> newBusDtos, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
-        }
-
-        List<Bus> savedBuses = new ArrayList<>();
-
-        for (BusDto newBusDto : newBusDtos) {
-            //Format the date time to a specific format
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm");
-            LocalDateTime departureTime = LocalDateTime.parse(newBusDto.getDepartureTime(), formatter);
-            LocalDateTime arrivalTime = LocalDateTime.parse(newBusDto.getArrivalTime(), formatter);
-
-            Bus bus = new Bus(departureTime, newBusDto.getDepartureLocation(), arrivalTime, newBusDto.getArrivalLocation(), newBusDto.getFare(), newBusDto.getBoardingPoints(), newBusDto.getDroppingPoints(), newBusDto.getBusType());
-            seatRepository.saveAll(bus.getSeats());
-
-            Bus savedBus = this.busRepository.save(bus);
-
-            for (Seat seat : savedBus.getSeats()) {
-                seat.setBusId(savedBus.getId());
-                seatRepository.save(seat);
-            }
-
-            savedBuses.add(this.busRepository.save(bus));
-        }
-
-        return ResponseEntity.ok(savedBuses);
-    }
-
+    @CacheEvict(key = "#id",value = "Bus")
     @DeleteMapping("/{id}")
     public void deleteBus(@PathVariable String id) {
         this.busRepository.deleteById(id);
     }
+
+
+
 }

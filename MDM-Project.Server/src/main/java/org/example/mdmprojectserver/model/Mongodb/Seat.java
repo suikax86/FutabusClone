@@ -1,12 +1,14 @@
-package org.example.mdmprojectserver.model;
+package org.example.mdmprojectserver.model.Mongodb;
 
 import org.springframework.data.annotation.Id;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
 @Data
 @Document(collection = "seats")
-public class Seat {
+public class Seat implements Serializable {
     @Id
     public String id;
     public String busId;

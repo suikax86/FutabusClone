@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.model;
+package org.example.mdmprojectserver.model.Mongodb;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,7 +8,6 @@ import org.example.mdmprojectserver.model.enums.Gender;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-//TODO: Add date of birth
 @Data
 @Document(collection = "customers")
 public class Customer {

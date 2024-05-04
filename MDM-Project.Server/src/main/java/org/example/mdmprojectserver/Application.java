@@ -2,13 +2,14 @@ package org.example.mdmprojectserver;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
-import org.example.mdmprojectserver.model.Role;
+import org.example.mdmprojectserver.model.RDBMS.Role;
 import org.example.mdmprojectserver.repository.RoleRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 //TODO: UserEntity&Customer mapping

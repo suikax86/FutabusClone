@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.model;
+package org.example.mdmprojectserver.model.RDBMS;
 
 import jakarta.persistence.*;
 import lombok.Data;
