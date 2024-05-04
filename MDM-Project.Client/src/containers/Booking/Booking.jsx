@@ -19,7 +19,12 @@ const Booking = () => {
     const SELECTED_SEAT = 'https://futabus.vn/images/icons/seat_selecting.svg';
 
     //const [item, setItem] = useState({ kindOfStand: "", another: "another" });
-    
+
+    const [customerName, setCustomerName] = useState("");
+    const [customerPhone, setCustomerPhone] = useState("");
+    const [customerEmail, setCustomerEmail] = useState("");
+
+
     const {id} = useParams();
 
     const[ghe,setGhe] = useState({'seats': []});
@@ -30,13 +35,28 @@ const Booking = () => {
                 const response = await axios.get(`http://localhost:8080/api/buses/${id}`);
                 setGhe(response.data);
                 if (response.status === 200) {
+                    console.log(response.data)
                     setGhe(response.data);
                     setDSDiemDon(response.data["boardingPoints"])
                     setDSDiemTra(response.data["droppingPoints"])
-                    return response.data;
+                }
+
+                const isLoggedIn = localStorage.getItem('isLoggedIn');
+                const customerId = localStorage.getItem('customerId');
+                console.log(isLoggedIn, customerId);
+                if (isLoggedIn === 'true' && customerId != null) {
+                    axios.get(`http://localhost:8080/api/customers/${customerId}`)
+                        .then(response => {
+                            setCustomerName(response.data.name);
+                            setCustomerPhone(response.data.phone);
+                            setCustomerEmail(response.data.email);
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                        });
                 }
             }
-            catch(error) {
+        catch(error) {
                 console.error("Error:", error);
             }
         };
@@ -72,8 +92,33 @@ const Booking = () => {
         navigate("/");
     }
 
-    const thanhtoan = () =>{
-        navigate();
+    const thanhtoan = () => {
+        const bookingData = {
+            busId: id,
+            customerId: localStorage.getItem('customerId'),
+            seats: selectGhe,
+            totalFare: ghe["fare"] * selectGhe.length
+        };
+        console.log(bookingData)
+        axios.post('http://localhost:8080/api/booking/book', bookingData)
+            .then(response => {
+                if (response.status === 200) {
+                    navigate('/payment', {
+                        state: {
+                            busId: id,
+                            customerId: localStorage.getItem('customerId'),
+                            seats: selectGhe,
+                            totalPrice: ghe["fare"] * selectGhe.length,
+                            boardingPoints: DiemDon,
+                            boardingTimes: doiNgay(ghe["departureTime"]),
+                            droppingPoints: DiemTra
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     }
 
     const[DiemDon, setDiemDon] = useState("");
@@ -155,17 +200,17 @@ const Booking = () => {
                                 <form>
                                     <div class="">
                                         <label for="hoten" class="form-label">Họ tên</label>
-                                        <input type="text" class="form-control" id="hoten" />
+                                        <input type="text" class="form-control" id="hoten" value={customerName}/>
                                     </div>
                                     
                                     <div class="">
                                         <label for="sdt" class="form-label">Số điện thoại</label>
-                                        <input type="text" class="form-control" id="sdt" />
+                                        <input type="text" class="form-control" id="sdt" value={customerPhone}/>
                                     </div>
 
                                     <div class="">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="text" class="form-control" id="email" />
+                                        <input type="text" class="form-control" id="email" value={customerEmail} />
                                     </div>
                                     {/* <button type="submit" class="btn btn-primary">Submit</button> */}
                                 </form>
@@ -236,7 +281,8 @@ const Booking = () => {
                                 <h3>Thông tin lượt đi</h3>
                                 <div class="row">
                                     <div class="col field">
-                                        Tuyến xe <br />
+                                        Tuyến xe đi <br />
+                                        Tuyến xe tới <br />
                                         Thời gian xuất bến <br />
                                         Số lượng ghế <br />
                                         Số ghế <br />
@@ -244,16 +290,17 @@ const Booking = () => {
                                     </div>
 
                                     <div class="col info" align="right">
-                                        {ghe["departureLocation"]} ⇒ {ghe["arrivalLocation"]} <br />
-                                        {doiNgay(ghe["departureTime"])} <br />
-                                        {selectGhe.length} Ghế <br />
+                                        {ghe["departureLocation"]}   <br/>
+                                        {ghe["arrivalLocation"]}  <br/>
+                                        {doiNgay(ghe["departureTime"])} <br/>
+                                        {selectGhe.length} Ghế <br/>
                                         {selectGhe.map((item) => {
                                             return (
                                                 <span key={item}>{item} </span>
                                             );
                                         })}
-                                        <br />
-                                        {ghe["fare"] * selectGhe.length}đ
+                                        <br/>
+                                        {ghe["fare"] * selectGhe.length}
                                     </div>
                                 </div>
                             </div>
@@ -262,8 +309,8 @@ const Booking = () => {
                                 <h3>Chi tiết giá</h3>
                                 <div class="row">
                                     <div class="col field">
-                                        Giá vé lượt đi <br />
-                                        Thanh toán <br /> 
+                                        Giá vé <br />
+
                                         <hr id="gach-ngang"/>
                                         <br  /> 
                                         <b> Tổng tiền </b>
@@ -271,7 +318,7 @@ const Booking = () => {
 
                                     <div class="col info" align="right">
                                         {ghe["fare"] * selectGhe.length}đ <br />
-                                        0đ <br  /> 
+
                                         <br  /> 
                                         <b id="tong-tien">  {ghe["fare"] * selectGhe.length}đ </b>
                                     </div>

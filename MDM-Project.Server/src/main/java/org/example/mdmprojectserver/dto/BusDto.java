@@ -2,6 +2,8 @@ package org.example.mdmprojectserver.dto;
 
 import lombok.Data;
 import org.example.mdmprojectserver.model.enums.BusType;
+import org.example.mdmprojectserver.model.enums.Status;
+
 import java.util.List;
     
 @Data
@@ -14,6 +16,6 @@ public class BusDto {
     public List<String> boardingPoints;
     public List<String> droppingPoints;
     public BusType busType;
-
+    public Status status;
 
 }
