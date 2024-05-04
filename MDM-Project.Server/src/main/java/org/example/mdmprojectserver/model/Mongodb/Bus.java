@@ -6,13 +6,14 @@ import org.example.mdmprojectserver.model.enums.TimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Document(collection = "buses")
-public class Bus {
+public class Bus implements Serializable {
     @Id
     public String id;
     public LocalDateTime departureTime;
