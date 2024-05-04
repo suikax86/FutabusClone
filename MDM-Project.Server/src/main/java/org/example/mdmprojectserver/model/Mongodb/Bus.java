@@ -2,6 +2,7 @@ package org.example.mdmprojectserver.model.Mongodb;
 
 import lombok.Data;
 import org.example.mdmprojectserver.model.enums.BusType;
+import org.example.mdmprojectserver.model.enums.Status;
 import org.example.mdmprojectserver.model.enums.TimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -25,6 +26,7 @@ public class Bus implements Serializable {
     public List<String> boardingPoints;
     public List<String> droppingPoints;
     public BusType busType;
+    public Status status;
     public List<Seat> seats = new ArrayList<>();
 
     public Bus(LocalDateTime departureTime, String departureLocation,
@@ -39,7 +41,7 @@ public class Bus implements Serializable {
         this.boardingPoints = boardingPoints;
         this.droppingPoints = droppingPoints;
         this.busType = busType;
-
+        this.status = Status.STILL_AVAILABLE;
         // Create 21 new seats and add them to the bus
         for(int i = 1; i <= 21; i++) {
             this.seats.add(new Seat("A" + i));

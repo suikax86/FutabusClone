@@ -1,11 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import './Payment.scss';
 import Header from '../HomePages/Header';
 
 const Payment = () => {
+    const location = useLocation();
 
+    // Lấy thông tin từ trang booking
+    const busId = location.state.busId;
+    const customerId = location.state.customerId;
+    const seats = location.state.seats;
+    const totalPrice = location.state.totalPrice;
+    const boardingPoints = location.state.boardingPoints;
+    const droppingPoints = location.state.droppingPoints;
+    const boardingTimes = location.state.boardingTimes;
     const [paymentMethod, setPaymentMethod] = useState('ZaloPay');
 
     const Ref = useRef(null);
@@ -86,8 +95,8 @@ const Payment = () => {
                             Quay lại
                         </div>
                         <div className='payment-header-buses'>
-                            <p style={{ fontSize: '28px'}}>Đà Nẵng - Đà Lạt</p>
-                            <span style={{ fontSize: '15px', marginTop: "0.5rem"}}>Thứ 3, 07/05</span>
+                            <p style={{ fontSize: '28px'}}>{boardingPoints} => {droppingPoints} </p>
+                            <span style={{ fontSize: '15px', marginTop: "0.5rem"}}>{boardingTimes}</span>
                         </div>
                         <div style={{ width: '5rem'}}></div>
                     </div>
@@ -120,7 +129,7 @@ const Payment = () => {
                         </div>
                         <div className='payment-amount'>
                             <span>Tổng thanh toán</span>
-                            <span style={{ fontSize: '44px', fontWeight: "500", color: "#ef5222"}}>410000đ</span>
+                            <span style={{ fontSize: '44px', fontWeight: "500", color: "#ef5222"}}>{totalPrice}</span>
                             <span style={{ marginTop: "10px", fontSize: '14px'}}>Thời gian giữ chỗ còn lại {timer}</span>
                         </div>
                         <div style={{ width: "320px"}}>
