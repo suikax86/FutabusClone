@@ -11,6 +11,7 @@ import TicketHistory from './containers/User/TicketHistory/TicketHistory';
 import ResetPassword from './containers/User/ResetPassword/ResetPassword';
 import Booking from './containers/Booking/Booking'
 import LookupTickets from "./containers/LookupTickets/LookupTickets.jsx";
+import Payment from './containers/Payment/Payment.jsx';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
       <Route path="/information" element={<Information />} />
       <Route path="/ticket-purchase-history" element={<TicketHistory />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/payment" element={<Payment />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
