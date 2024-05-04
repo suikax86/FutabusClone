@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss'
 
 import HomePage from './containers/HomePages/HomePage';
@@ -11,6 +10,7 @@ import Information from './containers/User/Information/Information';
 import TicketHistory from './containers/User/TicketHistory/TicketHistory';
 import ResetPassword from './containers/User/ResetPassword/ResetPassword';
 import Booking from './containers/Booking/Booking'
+import LookupTickets from "./containers/LookupTickets/LookupTickets.jsx";
 
 function App() {
 
@@ -19,13 +19,13 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/lich-trinh" element={<Schedule />} />
       <Route path="/thong-tin-ve" element={<Booking />} />
+        <Route path="/tra-cuu-ve" element={<LookupTickets />} />
       <Route path="/hoa-don" element={<Invoice />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/information" element={<Information />} />
       <Route path="/ticket-purchase-history" element={<TicketHistory />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

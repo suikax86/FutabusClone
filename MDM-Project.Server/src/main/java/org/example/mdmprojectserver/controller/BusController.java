@@ -1,8 +1,8 @@
 package org.example.mdmprojectserver.controller;
 
 import org.example.mdmprojectserver.dto.BusDto;
-import org.example.mdmprojectserver.model.Bus;
-import org.example.mdmprojectserver.model.Seat;
+import org.example.mdmprojectserver.model.Mongodb.Bus;
+import org.example.mdmprojectserver.model.Mongodb.Seat;
 import org.example.mdmprojectserver.model.enums.BusType;
 import org.example.mdmprojectserver.model.enums.SortType;
 import org.example.mdmprojectserver.model.enums.TimeType;

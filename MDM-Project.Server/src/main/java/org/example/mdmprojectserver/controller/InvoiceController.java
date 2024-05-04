@@ -2,7 +2,7 @@ package org.example.mdmprojectserver.controller;
 
 import jakarta.validation.Valid;
 import org.example.mdmprojectserver.dto.InvoiceDto;
-import org.example.mdmprojectserver.model.Invoice;
+import org.example.mdmprojectserver.model.Mongodb.Invoice;
 import org.example.mdmprojectserver.repository.InvoiceRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,12 +27,8 @@ public class InvoiceController {
         return invoiceRepository.findAll();
     }
 
-    // @GetMapping("/{id}")
-    // public ResponseEntity<?> getInvoice(@PathVariable String id) {
-    //     return ResponseEntity.ok(invoiceRepository.findById(id));
-    // }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCustomer(@PathVariable String id) {
+    public ResponseEntity<?> getInvoice(@PathVariable String id) {
         Optional<Invoice> optionalInvoice = invoiceRepository.findById(id);
         if (optionalInvoice.isPresent()) {
             return ResponseEntity.ok(optionalInvoice.get());
@@ -75,10 +71,7 @@ public class InvoiceController {
         return ResponseEntity.ok(savedInvoice);
     }
 
-    // @DeleteMapping("/{id}")
-    // public void deleteInvoice(@PathVariable String id) {
-    //     invoiceRepository.deleteById(id);
-    // }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteInvoice(@PathVariable String id) {
         Optional<Invoice> optionalInvoice = invoiceRepository.findById(id);

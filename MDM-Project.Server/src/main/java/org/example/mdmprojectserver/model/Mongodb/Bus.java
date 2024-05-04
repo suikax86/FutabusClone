@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.model;
+package org.example.mdmprojectserver.model.Mongodb;
 
 import lombok.Data;
 import org.example.mdmprojectserver.model.enums.BusType;

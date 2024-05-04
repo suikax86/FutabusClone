@@ -79,6 +79,7 @@ const HomePage = () => {
                 }
             });
             if (response.status === 200) {
+                console.log(response.data)
                 setDSChuyenXe(response.data);
                 return response.data;
             } else {
