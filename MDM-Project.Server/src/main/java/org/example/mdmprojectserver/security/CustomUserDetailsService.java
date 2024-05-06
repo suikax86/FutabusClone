@@ -1,8 +1,8 @@
 package org.example.mdmprojectserver.security;
 
-import org.example.mdmprojectserver.model.RDBMS.Role;
-import org.example.mdmprojectserver.model.RDBMS.UserEntity;
-import org.example.mdmprojectserver.repository.UserRepository;
+import org.example.mdmprojectserver.jpa.model.Role;
+import org.example.mdmprojectserver.jpa.model.UserEntity;
+import org.example.mdmprojectserver.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
