@@ -36,6 +36,7 @@ public class BusController {
         return this.busRepository.findAll();
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getBus(@PathVariable String id) {
         return ResponseEntity.ok(this.busRepository.findById(id));
