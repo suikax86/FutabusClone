@@ -1,9 +1,9 @@
 package org.example.mdmprojectserver.mongodb.model;
 
 import lombok.Data;
-import org.example.mdmprojectserver.enums.BusType;
-import org.example.mdmprojectserver.enums.Status;
-import org.example.mdmprojectserver.enums.TimeType;
+import org.example.mdmprojectserver.mongodb.enums.BusType;
+import org.example.mdmprojectserver.mongodb.enums.Status;
+import org.example.mdmprojectserver.mongodb.enums.TimeType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,8 +1,8 @@
-package org.example.mdmprojectserver.dto;
+package org.example.mdmprojectserver.mongodb.dto;
 
 import lombok.Data;
-import org.example.mdmprojectserver.enums.BusType;
-import org.example.mdmprojectserver.enums.Status;
+import org.example.mdmprojectserver.mongodb.enums.BusType;
+import org.example.mdmprojectserver.mongodb.enums.Status;
 
 import java.util.List;
     

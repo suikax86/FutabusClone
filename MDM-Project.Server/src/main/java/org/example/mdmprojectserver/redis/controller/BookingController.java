@@ -1,6 +1,6 @@
 package org.example.mdmprojectserver.redis.controller;
 
-import org.example.mdmprojectserver.dto.TicketDto;
+import org.example.mdmprojectserver.mongodb.dto.TicketDto;
 import org.example.mdmprojectserver.mongodb.model.Ticket;
 import org.example.mdmprojectserver.redis.service.BookingService;
 import org.springframework.http.ResponseEntity;

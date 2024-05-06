@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.enums;
+package org.example.mdmprojectserver.mongodb.enums;
 
 public enum Status {
     STILL_AVAILABLE,

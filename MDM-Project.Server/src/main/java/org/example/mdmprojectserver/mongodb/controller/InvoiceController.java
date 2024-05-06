@@ -1,7 +1,7 @@
 package org.example.mdmprojectserver.mongodb.controller;
 
 import jakarta.validation.Valid;
-import org.example.mdmprojectserver.dto.InvoiceDto;
+import org.example.mdmprojectserver.mongodb.dto.InvoiceDto;
 import org.example.mdmprojectserver.mongodb.model.Invoice;
 import org.example.mdmprojectserver.mongodb.repository.InvoiceRepository;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package org.example.mdmprojectserver.mongodb.controller;
 
 import jakarta.validation.Valid;
-import org.example.mdmprojectserver.dto.CustomerDto;
+import org.example.mdmprojectserver.mongodb.dto.CustomerDto;
 import org.example.mdmprojectserver.mongodb.model.Customer;
 import org.example.mdmprojectserver.mongodb.repository.CustomerRepository;
 import org.springframework.http.ResponseEntity;

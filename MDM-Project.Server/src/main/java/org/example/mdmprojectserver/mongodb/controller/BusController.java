@@ -1,11 +1,11 @@
 package org.example.mdmprojectserver.mongodb.controller;
 
-import org.example.mdmprojectserver.dto.BusDto;
+import org.example.mdmprojectserver.mongodb.dto.BusDto;
 import org.example.mdmprojectserver.mongodb.model.Bus;
 import org.example.mdmprojectserver.mongodb.model.Seat;
-import org.example.mdmprojectserver.enums.BusType;
-import org.example.mdmprojectserver.enums.SortType;
-import org.example.mdmprojectserver.enums.TimeType;
+import org.example.mdmprojectserver.mongodb.enums.BusType;
+import org.example.mdmprojectserver.mongodb.enums.SortType;
+import org.example.mdmprojectserver.mongodb.enums.TimeType;
 import org.example.mdmprojectserver.mongodb.repository.BusRepository;
 import org.example.mdmprojectserver.mongodb.repository.SeatRepository;
 import org.springframework.http.ResponseEntity;

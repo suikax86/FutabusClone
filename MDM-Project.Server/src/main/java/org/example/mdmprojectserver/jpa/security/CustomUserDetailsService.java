@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.security;
+package org.example.mdmprojectserver.jpa.security;
 
 import org.example.mdmprojectserver.jpa.model.Role;
 import org.example.mdmprojectserver.jpa.model.UserEntity;

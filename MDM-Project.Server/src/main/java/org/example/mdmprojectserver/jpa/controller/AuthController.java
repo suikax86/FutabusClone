@@ -1,15 +1,15 @@
 package org.example.mdmprojectserver.jpa.controller;
 
-import org.example.mdmprojectserver.dto.AuthResponseDto;
-import org.example.mdmprojectserver.dto.LoginDto;
-import org.example.mdmprojectserver.dto.RegisterDto;
+import org.example.mdmprojectserver.jpa.dto.AuthResponseDto;
+import org.example.mdmprojectserver.jpa.dto.LoginDto;
+import org.example.mdmprojectserver.jpa.dto.RegisterDto;
 import org.example.mdmprojectserver.mongodb.model.Customer;
 import org.example.mdmprojectserver.jpa.model.Role;
 import org.example.mdmprojectserver.jpa.model.UserEntity;
 import org.example.mdmprojectserver.mongodb.repository.CustomerRepository;
 import org.example.mdmprojectserver.jpa.repository.RoleRepository;
 import org.example.mdmprojectserver.jpa.repository.UserRepository;
-import org.example.mdmprojectserver.security.JWTGenerator;
+import org.example.mdmprojectserver.jpa.security.JWTGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

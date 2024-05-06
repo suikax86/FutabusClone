@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.config;
+package org.example.mdmprojectserver.redis.config;
 
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;

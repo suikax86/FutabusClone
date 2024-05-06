@@ -1,10 +1,10 @@
-package org.example.mdmprojectserver.dto;
+package org.example.mdmprojectserver.mongodb.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import org.example.mdmprojectserver.enums.Gender;
+import org.example.mdmprojectserver.mongodb.enums.Gender;
 
 @Data
 public class CustomerDto {

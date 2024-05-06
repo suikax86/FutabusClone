@@ -1,4 +1,4 @@
-package org.example.mdmprojectserver.dto;
+package org.example.mdmprojectserver.mongodb.dto;
 import lombok.Data;
 import java.util.List;
 
