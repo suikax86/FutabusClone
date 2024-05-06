@@ -29,9 +29,31 @@ const HomePage = () => {
 
       const huongdan = () => {
           navigate('/huongdan');
+          
       }
 
-      const dienthongtin = () => {
+      const dienthongtin = (id) => {
+       console.log("setDSChuyenXe");
+       async function fetchData() {
+        try {
+            const response = await axios.get('http://localhost:8080/api/redis/'+ id);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    }
+    
+    (async () => {
+        try {
+            const data = await fetchData();
+            console.log('Data:', data);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    })(); 
+    console.log("setDSChuyenXe2");
+
         navigate('/thong-tin-ve')
       }
       const [DiemDi, setDiemDi] = useState('');
@@ -78,6 +100,7 @@ const HomePage = () => {
                     timeType: timeType
                 }
             });
+            console.log("Called");
             if (response.status === 200) {
                 console.log(response.data)
                 setDSChuyenXe(response.data);
@@ -400,7 +423,7 @@ const HomePage = () => {
 
 
                                     return (
-                                        <div key={index} className="ChuyenXe row" onClick={dienthongtin}>
+                                        <div key={index} className="ChuyenXe row" onClick={() => dienthongtin(bus.id)}>
                                             <div className="TGDi col-1">
                                                 <h1>{departureHour}</h1>
                                                 <p>{bus.boardingPoints[0]}</p>
