@@ -12,9 +12,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 //TODO: Buses: embedded seats, ticket
 //TODO: Handle output of exception in controller
@@ -48,9 +53,10 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 public class Application implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
     private final RoleRepository roleRepository;
-
-    public Application(RoleRepository roleRepository) {
+    private final MongoTemplate mongoTemplate;
+    public Application(RoleRepository roleRepository, MongoTemplate mongoTemplate) {
         this.roleRepository = roleRepository;
+        this.mongoTemplate = mongoTemplate;
 
     }
 
@@ -61,7 +67,7 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        //Insert sample data
+        //Insert ROLE data into postgresql for sign up and sign in api
         if(roleRepository.count() == 0) {
             Role role1 = new Role(1,"USER");
             Role role2 = new Role(2,"ADMIN");
@@ -69,6 +75,10 @@ public class Application implements CommandLineRunner {
             roleRepository.save(role2);
             logger.info("Thêm dữ liệu mẫu vào bảng roles trong postgresql thành công!");
         }
+
+        List<Map<String, Object>> data = Arrays.asList(
+
+        );
 
 
     }
