@@ -1,5 +1,6 @@
 package org.example.mdmprojectserver.neo4j.controller;
 
+import org.example.mdmprojectserver.neo4j.dto.RouteDTO;
 import org.example.mdmprojectserver.neo4j.node.City;
 import org.example.mdmprojectserver.neo4j.repository.CityRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,5 +21,10 @@ public class CityController {
     @GetMapping("/")
     public List<City> getCity() {
         return cityRepository.findAll();
+    }
+
+    @GetMapping("/route")
+    public List<RouteDTO> getRoute() {
+        return cityRepository.findMostPopularRoute();
     }
 }
