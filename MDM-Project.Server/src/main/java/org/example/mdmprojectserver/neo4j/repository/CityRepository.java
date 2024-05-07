@@ -10,9 +10,10 @@ import java.util.List;
 
 public interface CityRepository extends Neo4jRepository<City, Long> {
     @Query("MATCH (p:Person)-[:MADE_TRIP]->(trip:Trip)-[:FROM]->(start:City)-[:TO]->(end:City) " +
-            "WITH start, end, trip, COUNT(DISTINCT p) AS numberOfPeople " +
-            "ORDER BY numberOfPeople DESC " +
+            "WITH start, end, trip, COUNT(DISTINCT p) AS numOfPeople " +
+            "ORDER BY numOfPeople DESC " +
             "LIMIT 3 " +
-            "RETURN start.cityName AS startCity, end.cityName AS endCity, trip.distance AS distance, trip.time AS time, numberOfPeople")
+            "RETURN start.cityName AS startCity, end.cityName AS endCity, trip.distance AS distance, trip.time AS time, numOfPeople")
+
     List<RouteDTO> findMostPopularRoute();
 }

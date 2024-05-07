@@ -192,6 +192,22 @@ const HomePage = () => {
 
     }
 
+    const [routeData, setRouteData] = useState(['']);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/city/route');
+                setRouteData(response.data);
+                console.log(routeData);
+            } catch (error) {
+                console.error('Error fetching route data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <React.Fragment>
             <Header />
@@ -329,35 +345,40 @@ const HomePage = () => {
                         </form>
 
                     </div>
-                    
+
+                    {routeData ? (
+
                     <div class="de-xuat">
                         <h2> Tuyến phổ biến </h2>
-                        <div className="ChuyenXe row">
+                        {routeData.map((route, index) => (
+                        <div key={index} className="ChuyenXe row">
                             <div className="TGDi col-1" align="center">
                                 <h1>Điểm Đi</h1>
-                                <p>Hồ Chí Minh</p>
+                                <p>{route.startCity}</p>
                             </div>
 
                             <div className="DiChuyen col-1">
                                 <img src={'https://futabus.vn/images/icons/pickup.svg'}/>
                                 <p>----------</p>
-                                <p id="tg-qd">7 giờ <br /> 200km </p>
+                                <p style={{ textAlign: 'center' }} id="tg-qd">{route.time} giờ<br /> {route.distance} km </p>
                                 <p>----------</p>
                                 <img src={'https://futabus.vn/images/icons/station.svg'}/>
                             </div>
 
                             <div className="TGDi col-1" align="center">
                                 <h1>Điểm đến</h1>
-                                <p>Đà Lạt</p>
+                                <p>{route.endCity}</p>
                             </div>
                             <div className="col-1">
-                                Limousine
-                            </div>
-                            <div className="col-1">
-                                <p className="Gia">100.000đ</p>
+                                <p style={{ textAlign: 'center' }} id="tg-qd"> Số người đã chọn<br/> {route.numOfPeople} </p>
                             </div>
                         </div>
+                        ))}
                     </div>
+
+                    ) : (
+                        <p>Loading route data...</p>
+                    )}
 
                     {TimChuyen == 0 ? (
                         <></>

@@ -8,6 +8,5 @@ public class RouteDTO {
     private String endCity;
     private Long distance;
     private Long time;
-    private Long numberOfPeople;
-
+    private Long numOfPeople;
 }
