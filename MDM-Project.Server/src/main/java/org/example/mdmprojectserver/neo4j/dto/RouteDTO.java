@@ -6,6 +6,7 @@ import lombok.Data;
 public class RouteDTO {
     private String startCity;
     private String endCity;
-    private Long numberOfPeople;
-
+    private Long distance;
+    private Long time;
+    private Long numOfPeople;
 }
