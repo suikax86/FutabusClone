@@ -39,7 +39,6 @@ const Invoice = () => {
     };
 
     const handleOutsideClick = (event) => {
-        // Kiểm tra xem có phải click bên ngoài cửa sổ không
         if (
           drawerRef.current &&
           !drawerRef.current.contains(event.target) &&
@@ -50,12 +49,10 @@ const Invoice = () => {
     };
 
     useEffect(() => {
-        // Thêm sự kiện mousedown toàn cầu khi cửa sổ mở
         if (isOpen) {
           document.addEventListener("mousedown", handleOutsideClick);
         }
     
-        // Cleanup sự kiện khi component unmount
         return () => {
           document.removeEventListener("mousedown", handleOutsideClick);
         };
@@ -206,12 +203,6 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Số ghế: </label>
                                                     <Form.Control type='text' value={invoiceData.seats}
-                                                                className='form-control-invoice' disabled
-                                                    ></Form.Control>
-                                                </Form.Group>
-                                                <Form.Group className='form-group-invoice'>
-                                                    <label className='fw-bold form-label-invoice'>Biển số xe: </label>
-                                                    <Form.Control type='text' value={invoiceData.licensePlates}
                                                                 className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
