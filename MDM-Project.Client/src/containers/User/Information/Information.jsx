@@ -100,10 +100,6 @@ const Information = () => {
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <label className="form-label">Ngày sinh</label>
-                                    <input type="date" className="form-control" value="2001-01-01" />
-                                </div>
-                                <div className="form-group">
                                     <label className="form-label">Địa chỉ:</label>
                                     <input type="text" name='address' className="form-control mb-1" 
                                            value={userData.address} 

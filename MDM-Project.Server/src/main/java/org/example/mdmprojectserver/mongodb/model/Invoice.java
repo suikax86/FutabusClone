@@ -28,7 +28,6 @@ public class Invoice {
     private String buses;
     private String time;
     private String seats;
-    private String licensePlates;
     private String boardingPoint;
 
     public Invoice() {
@@ -36,7 +35,7 @@ public class Invoice {
         this.invoiceID = generateRandomInvoiceID();
     }
 
-    public Invoice(String name, String phone, String email, double price, String paymentMethod, String status, String buses, String time, String seats, String licensePlates, String boardingPoint) {
+    public Invoice(String name, String phone, String email, double price, String paymentMethod, String status, String buses, String time, String seats, String boardingPoint) {
         this.invoiceID = generateRandomInvoiceID();
         this.name = name;
         this.phone = phone;
@@ -47,7 +46,6 @@ public class Invoice {
         this.buses = buses;
         this.time = time;
         this.seats = seats;
-        this.licensePlates = licensePlates;
         this.boardingPoint = boardingPoint;
     }
 

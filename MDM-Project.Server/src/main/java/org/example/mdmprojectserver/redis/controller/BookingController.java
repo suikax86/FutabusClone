@@ -6,6 +6,9 @@ import org.example.mdmprojectserver.redis.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/booking")
 public class BookingController {
@@ -18,7 +21,7 @@ public class BookingController {
     @PostMapping("/book")
     public ResponseEntity<String> bookTicket(@RequestBody TicketDto ticketDto) {
         try {
-            Ticket ticket = new Ticket(ticketDto.getBusId(), ticketDto.getCustomerId(), ticketDto.getSeats(), ticketDto.getTotalFare());
+            Ticket ticket = new Ticket(ticketDto.getBusId(), ticketDto.getCustomerId(), ticketDto.getSeats(), ticketDto.getTotalFare(), ticketDto.getBoardingPoint(), ticketDto.getDroppingPoint());
             bookingService.bookTicket(ticket);
             return ResponseEntity.ok("Ticket booked successfully. Please pay within 20 minutes to confirm your booking.");
         } catch (Exception e) {
@@ -27,12 +30,12 @@ public class BookingController {
     }
 
     @PostMapping("/confirm")
-    public ResponseEntity<String> confirmBooking(@RequestParam String busId, @RequestParam String customerId) {
+    public ResponseEntity<Map<String, String>> confirmBooking(@RequestParam String busId, @RequestParam String customerId) {
         try {
-            bookingService.confirmBooking(busId, customerId);
-            return ResponseEntity.ok("Booking confirmed successfully.");
+            Map<String, String> ids = bookingService.confirmBooking(busId, customerId);
+            return ResponseEntity.ok(ids);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error confirming booking: " + e.getMessage());
+            return ResponseEntity.status(500).body(Collections.singletonMap("error", "Error confirming booking: " + e.getMessage()));
         }
     }
 }
