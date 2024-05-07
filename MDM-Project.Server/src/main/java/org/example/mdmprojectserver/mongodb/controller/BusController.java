@@ -1,18 +1,13 @@
 package org.example.mdmprojectserver.mongodb.controller;
 
-import org.example.mdmprojectserver.dto.BusDto;
-import org.example.mdmprojectserver.model.Mongodb.Bus;
-import org.example.mdmprojectserver.model.Mongodb.Seat;
-import org.example.mdmprojectserver.model.enums.BusType;
-import org.example.mdmprojectserver.model.enums.SortType;
-import org.example.mdmprojectserver.model.enums.TimeType;
-import org.example.mdmprojectserver.repository.BusRepository;
-import org.example.mdmprojectserver.repository.SeatRepository;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.http.HttpStatus;
+import org.example.mdmprojectserver.mongodb.dto.BusDto;
+import org.example.mdmprojectserver.mongodb.model.Bus;
+import org.example.mdmprojectserver.mongodb.model.Seat;
+import org.example.mdmprojectserver.mongodb.enums.BusType;
+import org.example.mdmprojectserver.mongodb.enums.SortType;
+import org.example.mdmprojectserver.mongodb.enums.TimeType;
+import org.example.mdmprojectserver.mongodb.repository.BusRepository;
+import org.example.mdmprojectserver.mongodb.repository.SeatRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +33,6 @@ public class BusController {
 
     @GetMapping("/")
     public List<Bus> getBuses() {
-
         return this.busRepository.findAll();
     }
 
@@ -118,36 +112,6 @@ public class BusController {
 
         return ResponseEntity.ok(this.busRepository.save(bus));
     }
-    @CachePut(key = "#id", value = "Bus")
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateBus(@PathVariable String id, @RequestBody BusDto updatedBusDto, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
-        }
-
-        // Retrieve the existing bus
-        Bus existingBus = busRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus not found"));
-
-        // Update the existing bus with the new data
-        existingBus.setDepartureLocation(updatedBusDto.getDepartureLocation());
-        existingBus.setArrivalLocation(updatedBusDto.getArrivalLocation());
-        existingBus.setDepartureTime(LocalDateTime.parse(updatedBusDto.getDepartureTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm")));
-        existingBus.setArrivalTime(LocalDateTime.parse(updatedBusDto.getArrivalTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm")));
-        existingBus.setFare(updatedBusDto.getFare());
-        existingBus.setBoardingPoints(updatedBusDto.getBoardingPoints());
-        existingBus.setDroppingPoints(updatedBusDto.getDroppingPoints());
-        existingBus.setBusType(updatedBusDto.getBusType());
-
-        // Save the updated bus
-        Bus updatedBus = busRepository.save(existingBus);
-
-        return ResponseEntity.ok(updatedBus);
-    }
-
-
-
-
 
     @PostMapping("/addBuses")
     public ResponseEntity<?> newBuses(@RequestBody List<BusDto> newBusDtos, BindingResult result) {
