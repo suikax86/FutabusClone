@@ -39,25 +39,22 @@ const Invoice = () => {
     };
 
     const handleOutsideClick = (event) => {
-        // Kiểm tra xem có phải click bên ngoài cửa sổ không
         if (
-          drawerRef.current &&
-          !drawerRef.current.contains(event.target) &&
-          isOpen
+            drawerRef.current &&
+            !drawerRef.current.contains(event.target) &&
+            isOpen
         ) {
             closeInvoice();
         }
     };
 
     useEffect(() => {
-        // Thêm sự kiện mousedown toàn cầu khi cửa sổ mở
         if (isOpen) {
-          document.addEventListener("mousedown", handleOutsideClick);
+            document.addEventListener("mousedown", handleOutsideClick);
         }
-    
-        // Cleanup sự kiện khi component unmount
+
         return () => {
-          document.removeEventListener("mousedown", handleOutsideClick);
+            document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, [isOpen]);
 
@@ -90,20 +87,20 @@ const Invoice = () => {
                             <Row>
                                 <Form.Group>
                                     <Form.Control type='text' placeholder='Số điện thoại'
-                                                name='phoneNumber'
-                                                value={formLookupInvoice.phoneNumber}
-                                                onChange={handleChange}
-                                                required
+                                                  name='phoneNumber'
+                                                  value={formLookupInvoice.phoneNumber}
+                                                  onChange={handleChange}
+                                                  required
                                     ></Form.Control>
                                 </Form.Group>
                             </Row>
                             <Row>
                                 <Form.Group>
                                     <Form.Control type='text' placeholder='Mã hóa đơn'
-                                                name='invoiceID'
-                                                value={formLookupInvoice.invoiceID}
-                                                onChange={handleChange}
-                                                required
+                                                  name='invoiceID'
+                                                  value={formLookupInvoice.invoiceID}
+                                                  onChange={handleChange}
+                                                  required
                                     ></Form.Control>
                                 </Form.Group>
                             </Row>
@@ -125,10 +122,10 @@ const Invoice = () => {
                                 <h3>
                                     Hóa đơn: <span>{invoiceData.invoiceID}</span>
                                 </h3>
-                                <button type="button" className="btn-close-invoice-modal" 
+                                <button type="button" className="btn-close-invoice-modal"
                                         data-modal-toggle="edit-user-modal"
                                         onClick={closeInvoice} >
-                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>  
+                                    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                 </button>
                             </div>
                             <div className='invoice-modal-body'>
@@ -140,13 +137,13 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Họ tên: </label>
                                                     <Form.Control type='text' value={invoiceData.name}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Tổng giá vé: </label>
                                                     <Form.Control type='text' value={invoiceData.price}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -156,13 +153,13 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Số điện thoại: </label>
                                                     <Form.Control type='text' value={invoiceData.phone}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>PTTT: </label>
                                                     <Form.Control type='text' value={invoiceData.paymentMethod}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -172,13 +169,13 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Email: </label>
                                                     <Form.Control type='text' value={invoiceData.email}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Trạng thái: </label>
                                                     <Form.Control type='text' value={invoiceData.status}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -190,13 +187,13 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Tuyến xe: </label>
                                                     <Form.Control type='text' value={invoiceData.buses}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Xuất bến: </label>
                                                     <Form.Control type='text' value={invoiceData.time}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -206,13 +203,7 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice'>
                                                     <label className='fw-bold form-label-invoice'>Số ghế: </label>
                                                     <Form.Control type='text' value={invoiceData.seats}
-                                                                className='form-control-invoice' disabled
-                                                    ></Form.Control>
-                                                </Form.Group>
-                                                <Form.Group className='form-group-invoice'>
-                                                    <label className='fw-bold form-label-invoice'>Biển số xe: </label>
-                                                    <Form.Control type='text' value={invoiceData.licensePlates}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>
@@ -222,7 +213,7 @@ const Invoice = () => {
                                                 <Form.Group className='form-group-invoice special-input'>
                                                     <label className='fw-bold form-label-invoice'>Điểm lên xe: </label>
                                                     <Form.Control type='text' value={invoiceData.boardingPoint}
-                                                                className='form-control-invoice' disabled
+                                                                  className='form-control-invoice' disabled
                                                     ></Form.Control>
                                                 </Form.Group>
                                             </Col>

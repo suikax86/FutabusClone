@@ -1,10 +1,9 @@
 package org.example.mdmprojectserver.redis.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.mdmprojectserver.mongodb.model.Bus;
-import org.example.mdmprojectserver.mongodb.model.Seat;
-import org.example.mdmprojectserver.mongodb.model.Ticket;
+import org.example.mdmprojectserver.mongodb.model.*;
 import org.example.mdmprojectserver.mongodb.repository.BusRepository;
+import org.example.mdmprojectserver.mongodb.repository.CustomerRepository;
 import org.example.mdmprojectserver.mongodb.repository.InvoiceRepository;
 import org.example.mdmprojectserver.mongodb.repository.TicketRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -12,7 +11,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -21,11 +22,14 @@ public class BookingService {
     private TicketRepository ticketRepository;
     private InvoiceRepository invoiceRepository;
     private BusRepository busRepository;
+    private CustomerRepository customerRepository;
 
-    public BookingService(StringRedisTemplate redisTemplate, TicketRepository ticketRepository, BusRepository busRepository) {
+    public BookingService(StringRedisTemplate redisTemplate, TicketRepository ticketRepository, InvoiceRepository invoiceRepository, BusRepository busRepository, CustomerRepository customerRepository) {
         this.redisTemplate = redisTemplate;
         this.ticketRepository = ticketRepository;
+        this.invoiceRepository = invoiceRepository;
         this.busRepository = busRepository;
+        this.customerRepository = customerRepository;
     }
 
 
@@ -63,14 +67,32 @@ public class BookingService {
         return objectMapper.readValue(ticketJson, Ticket.class);
     }
 
-    public void confirmBooking(String busId, String customerId) throws Exception {
+    public Map<String, String> confirmBooking(String busId, String customerId) throws Exception {
+        Map<String, String> ids = new HashMap<>();
         Ticket ticket = getTicket(busId, customerId);
         if (ticket != null) {
             // Store the booking information in MongoDB
             ticketRepository.save(ticket);
             // Remove the key from Redis
             redisTemplate.delete(busId + ":" + customerId);
+            Customer customer = customerRepository.findById(ticket.getCustomerId()).orElseThrow(() -> new Exception("Customer not found"));
+            Invoice invoice = new Invoice(
+                    customer.getName(),
+                    customer.getPhone(),
+                    customer.getEmail(),
+                    ticket.getTotalFare(),
+                    "ZaloPay",
+                    "Confirmed",
+                    ticket.getBusId(),
+                    "2024-05-05 20:00:00",
+                    ticket.getSeats().toString(),
+                    ticket.getBoardingPoint()
+            );
+            invoiceRepository.save(invoice);
+            ids.put("invoiceId", invoice.getInvoiceID());
+            ids.put("ticketId", ticket.getId());
         }
+        return ids;
     }
 
 }

@@ -11,9 +11,9 @@ const Payment = () => {
     const busId = location.state.busId;
     const customerId = location.state.customerId;
     const seats = location.state.seats;
-    const totalPrice = location.state.totalPrice;
-    const boardingPoints = location.state.boardingPoints;
-    const droppingPoints = location.state.droppingPoints;
+    const totalPrice = location.state.totalFare;
+    const boardingPoints = location.state.boardingPoint;
+    const droppingPoints = location.state.droppingPoint;
     const boardingTimes = location.state.boardingTimes;
     const [paymentMethod, setPaymentMethod] = useState('ZaloPay');
 

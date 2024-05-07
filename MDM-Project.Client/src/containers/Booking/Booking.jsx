@@ -113,6 +113,7 @@ const Booking = () => {
                             totalFare: ghe["fare"] * selectGhe.length,
                             boardingPoint: DiemDon,
                             droppingPoint: DiemTra
+
                         }
                     });
                 }
