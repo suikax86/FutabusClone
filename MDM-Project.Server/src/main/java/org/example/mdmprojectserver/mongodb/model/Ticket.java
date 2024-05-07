@@ -4,17 +4,21 @@ import jakarta.persistence.Id;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Document(collection = "tickets")
-public class Ticket {
+public class Ticket implements Serializable {
     @Id
     public String id;
     public String busId;
     public String customerId;
     public List<String> seats;
     public Double totalFare;
+
+    public Ticket() {
+    }
 
     public Ticket(String busId, String customerId, List<String> seats, Double totalFare) {
         this.id = generateRandomTicketID();
@@ -23,6 +27,7 @@ public class Ticket {
         this.seats = seats;
         this.totalFare = totalFare;
     }
+
 
     private String generateRandomTicketID() {
         // Generate a random ticket ID with 10 characters

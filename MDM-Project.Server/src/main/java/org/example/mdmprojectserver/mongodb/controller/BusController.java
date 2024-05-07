@@ -25,7 +25,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@EnableCaching
 @RequestMapping("/api/buses")
 @RestController
 public class BusController {
@@ -41,7 +40,6 @@ public class BusController {
         return this.busRepository.findAll();
     }
 
-    @Cacheable(key = "#id",value = "Bus")
     @GetMapping("/{id}")
     public Bus getBus(@PathVariable String id) {
         Bus bus = this.busRepository.findById(id).orElse(null);

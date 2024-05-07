@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface BusRepository extends MongoRepository<Bus, String> {
     boolean existsById(String id);
     Optional<Bus> findById(String invoiceID);
-
+    Bus getBusById(String id);
 }

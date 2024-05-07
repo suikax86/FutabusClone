@@ -5,6 +5,7 @@ import org.example.mdmprojectserver.mongodb.model.Bus;
 import org.example.mdmprojectserver.mongodb.model.Seat;
 import org.example.mdmprojectserver.mongodb.model.Ticket;
 import org.example.mdmprojectserver.mongodb.repository.BusRepository;
+import org.example.mdmprojectserver.mongodb.repository.InvoiceRepository;
 import org.example.mdmprojectserver.mongodb.repository.TicketRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -18,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class BookingService {
     private StringRedisTemplate redisTemplate;
     private TicketRepository ticketRepository;
+    private InvoiceRepository invoiceRepository;
     private BusRepository busRepository;
 
     public BookingService(StringRedisTemplate redisTemplate, TicketRepository ticketRepository, BusRepository busRepository) {
@@ -34,19 +36,16 @@ public class BookingService {
         String key = ticket.getBusId() + ":" + ticket.getCustomerId();
 
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
-        ops.set(key, ticketJson, 20, TimeUnit.SECONDS);
+        ops.set(key, ticketJson, 30, TimeUnit.SECONDS);
 
         // Update the "seats" information on "buses" in MongoDB
         Bus bus = busRepository.findById(ticket.getBusId()).orElseThrow(() -> new Exception("Bus not found"));
-        List<Seat> originalSeats = new ArrayList<>();
         bus.getSeats().forEach(seat -> {
             if (ticket.getSeats().contains(seat.getSeatNumber())) {
-                originalSeats.add(seat);
                 seat.setIsBooked(true);
                 seat.setCustomerId(ticket.getCustomerId());
             }
         });
-
         busRepository.save(bus);
 
     }
