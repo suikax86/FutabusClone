@@ -18,7 +18,7 @@ public class BookingController {
     @PostMapping("/book")
     public ResponseEntity<String> bookTicket(@RequestBody TicketDto ticketDto) {
         try {
-            Ticket ticket = new Ticket(ticketDto.getBusId(), ticketDto.getCustomerId(), ticketDto.getSeats(), ticketDto.getTotalFare());
+            Ticket ticket = new Ticket(ticketDto.getBusId(), ticketDto.getCustomerId(), ticketDto.getSeats(), ticketDto.getTotalFare(), ticketDto.getBoardingPoint(), ticketDto.getDroppingPoint());
             bookingService.bookTicket(ticket);
             return ResponseEntity.ok("Ticket booked successfully. Please pay within 20 minutes to confirm your booking.");
         } catch (Exception e) {

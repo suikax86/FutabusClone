@@ -97,7 +97,9 @@ const Booking = () => {
             busId: id,
             customerId: localStorage.getItem('customerId'),
             seats: selectGhe,
-            totalFare: ghe["fare"] * selectGhe.length
+            totalFare: ghe["fare"] * selectGhe.length,
+            boardingPoint: DiemDon,
+            droppingPoint: DiemTra
         };
         console.log(bookingData)
         axios.post('http://localhost:8080/api/booking/book', bookingData)
@@ -108,10 +110,9 @@ const Booking = () => {
                             busId: id,
                             customerId: localStorage.getItem('customerId'),
                             seats: selectGhe,
-                            totalPrice: ghe["fare"] * selectGhe.length,
-                            boardingPoints: DiemDon,
-                            boardingTimes: doiNgay(ghe["departureTime"]),
-                            droppingPoints: DiemTra
+                            totalFare: ghe["fare"] * selectGhe.length,
+                            boardingPoint: DiemDon,
+                            droppingPoint: DiemTra
                         }
                     });
                 }

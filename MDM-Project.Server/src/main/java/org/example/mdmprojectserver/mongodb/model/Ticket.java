@@ -16,16 +16,19 @@ public class Ticket implements Serializable {
     public String customerId;
     public List<String> seats;
     public Double totalFare;
-
+    public String boardingPoint;
+    public String droppingPoint;
     public Ticket() {
     }
 
-    public Ticket(String busId, String customerId, List<String> seats, Double totalFare) {
+    public Ticket(String busId, String customerId, List<String> seats, Double totalFare, String boardingPoint, String droppingPoint) {
         this.id = generateRandomTicketID();
         this.busId = busId;
         this.customerId = customerId;
         this.seats = seats;
         this.totalFare = totalFare;
+        this.boardingPoint = boardingPoint;
+        this.droppingPoint = droppingPoint;
     }
 
 

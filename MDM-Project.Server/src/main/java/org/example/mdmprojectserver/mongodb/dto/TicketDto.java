@@ -10,4 +10,6 @@ public class TicketDto {
     public String customerId;
     public List<String> seats;
     public Double totalFare;
+    public String boardingPoint;
+    public String droppingPoint;
 }

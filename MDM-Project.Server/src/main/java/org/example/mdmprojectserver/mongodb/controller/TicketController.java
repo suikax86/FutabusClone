@@ -50,14 +50,15 @@ public class TicketController {
             ticketResponseDto.setSeats(ticket.getSeats());
             ticketResponseDto.setTotalFare(ticket.getTotalFare());
             ticketResponseDto.setFare(ticket.getTotalFare() / ticket.getSeats().size());
+            ticketResponseDto.setBoardingPoint(ticket.getBoardingPoint());
+            ticketResponseDto.setDroppingPoint(ticket.getDroppingPoint());
 
             // Set Bus details
             ticketResponseDto.setDepartureTime(bus.getDepartureTime().toString());
             ticketResponseDto.setDepartureLocation(bus.getDepartureLocation());
             ticketResponseDto.setArrivalTime(bus.getArrivalTime().toString());
             ticketResponseDto.setArrivalLocation(bus.getArrivalLocation());
-            ticketResponseDto.setBoardingPoints(bus.getBoardingPoints().toString());
-            ticketResponseDto.setDroppingPoints(bus.getDroppingPoints().toString());
+
             ticketResponseDto.setBusType(bus.getBusType());
 
             // Set Customer details
@@ -100,14 +101,14 @@ public class TicketController {
             ticketResponseDto.setSeats(ticket.getSeats());
             ticketResponseDto.setTotalFare(ticket.getTotalFare());
             ticketResponseDto.setFare(ticket.getTotalFare() / ticket.getSeats().size());
+            ticketResponseDto.setBoardingPoint(ticket.getBoardingPoint());
+            ticketResponseDto.setDroppingPoint(ticket.getDroppingPoint());
 
             // Set Bus details
             ticketResponseDto.setDepartureTime(bus.getDepartureTime().toString());
             ticketResponseDto.setDepartureLocation(bus.getDepartureLocation());
             ticketResponseDto.setArrivalTime(bus.getArrivalTime().toString());
             ticketResponseDto.setArrivalLocation(bus.getArrivalLocation());
-            ticketResponseDto.setBoardingPoints(bus.getBoardingPoints().toString());
-            ticketResponseDto.setDroppingPoints(bus.getDroppingPoints().toString());
             ticketResponseDto.setBusType(bus.getBusType());
 
             // Set Customer details
@@ -129,7 +130,7 @@ public class TicketController {
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body("Validation errors: " + result.getAllErrors());
         }
-        Ticket ticket = new Ticket(newTicketDto.getBusId(), newTicketDto.getCustomerId(), newTicketDto.getSeats(), newTicketDto.getTotalFare());
+        Ticket ticket = new Ticket(newTicketDto.getBusId(), newTicketDto.getCustomerId(), newTicketDto.getSeats(), newTicketDto.getTotalFare(), newTicketDto.getBoardingPoint(), newTicketDto.getDroppingPoint());
         return ResponseEntity.ok(ticketRepositoryRepository.save(ticket));
     }
 

@@ -55,6 +55,10 @@ public class BookingService {
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         String ticketJson = ops.get(key);
 
+        if (ticketJson == null) {
+            throw new Exception("No ticket found for busId: " + busId + " and customerId: " + customerId);
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(ticketJson, Ticket.class);
     }

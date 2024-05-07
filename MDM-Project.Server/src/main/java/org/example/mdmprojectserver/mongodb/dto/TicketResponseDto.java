@@ -12,8 +12,8 @@ public class TicketResponseDto {
     public String departureLocation;
     public String arrivalTime;
     public String arrivalLocation;
-    public String boardingPoints;
-    public String droppingPoints;
+    public String boardingPoint;
+    public String droppingPoint;
     public BusType busType;
     public Double totalFare;
     public List<String> seats;

@@ -63,7 +63,6 @@ public class InvoiceController {
                 invoiceDto.getBuses(),
                 invoiceDto.getTime(),
                 invoiceDto.getSeats(),
-                invoiceDto.getLicensePlates(),
                 invoiceDto.getBoardingPoint()
         );
 
