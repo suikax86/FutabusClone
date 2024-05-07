@@ -17,9 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+
 
 //TODO: Buses: embedded seats, ticket
 //TODO: Handle output of exception in controller
@@ -48,7 +46,6 @@ import java.util.Map;
         excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX, pattern = "org\\.example\\.mdmprojectserver\\.(jpa|mongodb|redis)\\.repository\\..*")
 )
 
-
 @OpenAPIDefinition(info = @Info(title = "MDM Project API", version = "1.0", description = "MDM Project API"))
 public class Application implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
@@ -57,7 +54,6 @@ public class Application implements CommandLineRunner {
     public Application(RoleRepository roleRepository, MongoTemplate mongoTemplate) {
         this.roleRepository = roleRepository;
         this.mongoTemplate = mongoTemplate;
-
     }
 
     public static void main(String[] args) {
@@ -76,9 +72,7 @@ public class Application implements CommandLineRunner {
             logger.info("Thêm dữ liệu mẫu vào bảng roles trong postgresql thành công!");
         }
 
-        List<Map<String, Object>> data = Arrays.asList(
-
-        );
+        
 
 
     }

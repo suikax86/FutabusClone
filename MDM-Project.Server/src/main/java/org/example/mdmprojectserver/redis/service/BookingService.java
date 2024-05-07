@@ -30,8 +30,9 @@ public class BookingService {
     public void bookTicket(Ticket ticket) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String ticketJson = objectMapper.writeValueAsString(ticket);
-
+        // Create a key for the ticket in Redis
         String key = ticket.getBusId() + ":" + ticket.getCustomerId();
+
         ValueOperations<String, String> ops = redisTemplate.opsForValue();
         ops.set(key, ticketJson, 20, TimeUnit.SECONDS);
 

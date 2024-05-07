@@ -8,9 +8,13 @@ import org.example.mdmprojectserver.mongodb.enums.SortType;
 import org.example.mdmprojectserver.mongodb.enums.TimeType;
 import org.example.mdmprojectserver.mongodb.repository.BusRepository;
 import org.example.mdmprojectserver.mongodb.repository.SeatRepository;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,8 +25,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@EnableCaching
 @RequestMapping("/api/buses")
+@RestController
 public class BusController {
     private final BusRepository busRepository;
     private final SeatRepository seatRepository;
@@ -36,10 +41,15 @@ public class BusController {
         return this.busRepository.findAll();
     }
 
-
+    @Cacheable(key = "#id",value = "Bus")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBus(@PathVariable String id) {
-        return ResponseEntity.ok(this.busRepository.findById(id));
+    public Bus getBus(@PathVariable String id) {
+        Bus bus = this.busRepository.findById(id).orElse(null);
+        if (bus == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus not found");
+        } else {
+            return bus;
+        }
     }
 
     @GetMapping("/search")
@@ -142,7 +152,6 @@ public class BusController {
 
         return ResponseEntity.ok(savedBuses);
     }
-
     @DeleteMapping("/{id}")
     public void deleteBus(@PathVariable String id) {
         this.busRepository.deleteById(id);
